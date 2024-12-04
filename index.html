@@ -91,7 +91,7 @@
       margin: 0;
     }
 
-    /* Стиль модального окна */
+    /* Модальное окно */
     .modal {
       display: none; /* Скрыто по умолчанию */
       position: fixed;
@@ -100,47 +100,43 @@
       top: 0;
       width: 100%;
       height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
-      justify-content: center;
-      align-items: center;
+      background-color: rgba(0, 0, 0, 0.5); /* Фон затемнения */
+      padding-top: 60px;
     }
+
     .modal-content {
       background-color: #fff;
       margin: 5% auto;
       padding: 20px;
       border-radius: 10px;
-      width: 300px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 400px;
     }
-    .modal-content h2 {
-      text-align: center;
-      color: #333;
+
+    /* Кнопка закрытия */
+    .close-btn {
+      color: #aaa;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
     }
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .modal-content button {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      background-color: #007BFF;
-      color: white;
-      border-radius: 5px;
+
+    .close-btn:hover,
+    .close-btn:focus {
+      color: black;
+      text-decoration: none;
       cursor: pointer;
     }
-    .modal-content button:hover {
-      background-color: #0056b3;
-    }
+
+    /* Стили для вкладок */
     .tab {
-      display: none;
+      display: none; /* Скрыть все вкладки по умолчанию */
     }
+
     .active-tab {
-      display: block;
+      display: block; /* Показывать активную вкладку */
     }
   </style>
 </head>
@@ -156,8 +152,7 @@
 <nav>
   <a href="#about">About Us</a>
   <a href="#contact">Contact</a>
-  <!-- Кнопка для открытия модального окна -->
-  <a href="javascript:void(0);" id="openModal">Account</a>
+  <a href="javascript:void(0);" onclick="openModal()">Account</a>
 </nav>
 
 <div class="hero">
@@ -166,12 +161,15 @@
 
 <section id="about" class="about">
   <h2>About Us</h2>
-  <p>Maangoff is an exclusive modeling agency specializing in discovering new faces and providing them with opportunities to shine in the fashion world...</p>
-  
+  <p>Maangoff is an exclusive modeling agency specializing in discovering new faces and providing them with opportunities to shine in the fashion world. We connect emerging talent with top designers, brands, and global campaigns. Our focus is on unveiling the true beauty and potential of each individual, shaping their careers with professionalism and expertise.</p>
+
   <!-- Фото галерея -->
   <div class="photo-gallery">
     <img src="https://pixabay.com/get/g1a4e726d746e78646686a692aa6f0b68b9b9a415847b72e6494dde8ad4b2e2220cc46a0446b2e858273ad9addf5ea09106c63f5d6cd5e4de844b858e2c3b676b_1920.jpg" alt="Model 1">
-    <!-- Другие изображения -->
+    <img src="https://pixabay.com/get/g1233877cab38a90daa43217619f53ded51aa17d6e5fedf035f8ce06dec7516737793b24f8586e3d5005f2ec407ce2d358c4fcbdb2b878a6e13e24b243a82e430_1920.jpg" alt="Model 2">
+    <img src="https://pixabay.com/get/gc213cd65530c0673e16a6f06680c7a9e1e32f17f0190c0a72e2e356d80c9f04fd72a326f8cb0e14feb130feb7590743a242795dbecf992683093d40b29114606_1920.jpg" alt="Model 3">
+    <img src="https://pixabay.com/get/gb8d9749434b5d9c303763c146775480b8cb0a8692badb52c0a6cf17014d3a0fb50699b6d0485dec923f9e2896c78fdd073a902278abbae199e0d59515687c24a_1920.jpg" alt="Model 4">
+    <img src="https://pixabay.com/get/g5582f58550c64f82449df067ee98fe86356e51e5d32977d7791dc8b9051fb6c6f182401f359b41ecef42749bf83a74178a42af2b26858186cf3290339dc7d5bc_1920.jpg" alt="Model 5">
   </div>
 </section>
 
@@ -187,59 +185,56 @@
 </footer>
 
 <!-- Модальное окно -->
-<div id="myModal" class="modal">
+<div id="modal" class="modal">
   <div class="modal-content">
-    <h2>Account</h2>
+    <span class="close-btn">&times;</span>
+    <!-- Вкладки -->
     <div id="registerTab" class="tab active-tab">
       <h3>Register</h3>
-  <input type="text" placeholder="Username">
-  <input type="password" placeholder="Password">
-  <button>Register</button>
-  <h3>Login</h3>
-  <input type="text" placeholder="Username">
-  <input type="password" placeholder="Password">
-  <button>Login</button>
-  <p>Don't have an account? <a href="javascript:void(0);" onclick="showRegisterTab()">Register</a></p>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button>Register</button>
+      <p>Already have an account? <a href="javascript:void(0);" onclick="showLoginTab()">Login</a></p>
+    </div>
+
+    <div id="loginTab" class="tab">
+      <h3>Login</h3>
+      <input type="text" placeholder="Username">
+      <input type="password" placeholder="Password">
+      <button>Login</button>
+      <p>Don't have an account? <a href="javascript:void(0);" onclick="showRegisterTab()">Register</a></p>
     </div>
   </div>
 </div>
 
 <script type="module">
-  // Firebase configuration
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-  const firebaseConfig = {
-    apiKey: "AIzaSyDXyC1mdhh9xAVbYPWJUuFjWkKzLYKC3Wg",
-    authDomain: "maangoff.firebaseapp.com",
-    projectId: "maangoff",
-    storageBucket: "maangoff.firebasestorage.app",
-    messagingSenderId: "32275259475",
-    appId: "1:32275259475:web:ca11e0aa78de847132a6a6"
-  };
-  const app = initializeApp(firebaseConfig);
-
-  // Открытие модального окна
-  const modal = document.getElementById("myModal");
-  const openModal = document.getElementById("openModal");
-  openModal.onclick = function() {
-    modal.style.display = "flex";
-  };
-
-  // Закрытие модального окна при клике вне окна
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
-
-  // Переключение между вкладками
-  function showLoginTab() {
-    document.getElementById("registerTab").classList.remove("active-tab");
-    document.getElementById("loginTab").classList.add("active-tab");
+  // Функция для показа вкладки регистрации
+  function showRegisterTab() {
+    document.getElementById('registerTab').classList.add('active-tab');
+    document.getElementById('loginTab').classList.remove('active-tab');
   }
 
-  function showRegisterTab() {
-    document.getElementById("loginTab").classList.remove("active-tab");
-    document.getElementById("registerTab").classList.add("active-tab");
+  // Функция для показа вкладки авторизации
+  function showLoginTab() {
+    document.getElementById('loginTab').classList.add('active-tab');
+    document.getElementById('registerTab').classList.remove('active-tab');
+  }
+  
+  // Функция для закрытия модального окна
+  document.querySelector('.close-btn').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+  });
+  
+  // Функция для открытия модального окна (кнопка "Account")
+  function openModal() {
+    document.getElementById('modal').style.display = 'block';
+  }
+  
+  // Закрытие модального окна при клике вне его области
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('modal')) {
+      document.getElementById('modal').style.display = 'none';
+    }
   }
 </script>
 
