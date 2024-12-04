@@ -47,12 +47,19 @@
           nameInput.value = data.name || '';
           ageInput.value = data.age || '';
           bioInput.value = data.bio || '';
-          if (data.profileImageUrl) profileImage.src = data.profileImageUrl;
+
+          // Убедитесь, что URL профиля существует
+          if (data.profileImageUrl) {
+            profileImage.src = data.profileImageUrl;
+          } else {
+            profileImage.src = 'default-profile.png'; // Путь к изображению по умолчанию
+          }
+
           loadGallery(user.uid);
         }
       } else {
         alert('You need to log in!');
-        window.location.href = '/'; // Вернуть на главную страницу
+        window.location.href = '/'; // Перенаправление на главную страницу
       }
     });
 
@@ -86,19 +93,26 @@
       if (!user) return;
 
       const files = galleryInput.files;
+      if (files.length === 0) return; // Если файлов нет, прекращаем выполнение
+
       for (let file of files) {
         const fileRef = ref(storage, `users/${user.uid}/gallery/${file.name}`);
         await uploadBytes(fileRef, file);
         const url = await getDownloadURL(fileRef);
         addImageToGallery(url);
       }
-      galleryInput.value = ''; // Очистить input
+      galleryInput.value = ''; // Очистить input после загрузки
     });
 
     // Загрузка галереи
     async function loadGallery(userId) {
       const galleryRef = ref(storage, `users/${userId}/gallery`);
       const gallerySnapshot = await galleryRef.listAll();
+      if (gallerySnapshot.items.length === 0) {
+        console.log('No images found in gallery.');
+        return;
+      }
+
       for (let item of gallerySnapshot.items) {
         const url = await getDownloadURL(item);
         addImageToGallery(url);
