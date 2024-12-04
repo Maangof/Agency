@@ -180,32 +180,31 @@
   <p>Address: 58 Knightsbridge, London, UK</p>
 </section>
 
-<footer>
-  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
-</footer>
-
 <!-- Модальное окно -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close-btn">&times;</span>
-    <!-- Вкладки -->
-    <div id="registerTab" class="tab active-tab">
-      <h3>Register</h3>
-      <input type="text" placeholder="Username">
-      <input type="password" placeholder="Password">
-      <button>Register</button>
-      <p>Already have an account? <a href="javascript:void(0);" onclick="showLoginTab()">Login</a></p>
-    </div>
-
-    <div id="loginTab" class="tab">
-      <h3>Login</h3>
-      <input type="text" placeholder="Username">
+    <div id="loginTab" class="tab active-tab">
+      <h2>Login</h2>
+      <input type="text" placeholder="Email">
       <input type="password" placeholder="Password">
       <button>Login</button>
       <p>Don't have an account? <a href="javascript:void(0);" onclick="showRegisterTab()">Register</a></p>
     </div>
+    <div id="registerTab" class="tab">
+      <h2>Register</h2>
+      <input type="text" placeholder="Name">
+      <input type="email" placeholder="Email">
+      <input type="password" placeholder="Password">
+      <button>Register</button>
+      <p>Already have an account? <a href="javascript:void(0);" onclick="showLoginTab()">Login</a></p>
+    </div>
   </div>
 </div>
+
+<footer>
+  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+</footer>
 
 <script type="module">
   // Функция для показа вкладки регистрации
@@ -219,17 +218,17 @@
     document.getElementById('loginTab').classList.add('active-tab');
     document.getElementById('registerTab').classList.remove('active-tab');
   }
-  
+
   // Функция для закрытия модального окна
   document.querySelector('.close-btn').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
   });
-  
+
   // Функция для открытия модального окна (кнопка "Account")
   function openModal() {
     document.getElementById('modal').style.display = 'block';
   }
-  
+
   // Закрытие модального окна при клике вне его области
   window.onclick = function(event) {
     if (event.target === document.getElementById('modal')) {
