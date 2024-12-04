@@ -180,7 +180,6 @@
   <p>Address: 58 Knightsbridge, London, UK</p>
 </section>
 
-<!-- Модальное окно -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <span class="close-btn">&times;</span>
@@ -203,8 +202,57 @@
 </div>
 
 <footer>
-  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+    <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
 </footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+  // Import Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXyC1mdhh9xAVbYPWJUuFjWkKzLYKC3Wg",
+    authDomain: "maangoff.firebaseapp.com",
+    projectId: "maangoff",
+    storageBucket: "maangoff.firebasestorage.app",
+    messagingSenderId: "32275259475",
+    appId: "1:32275259475:web:ca11e0aa78de847132a6a6"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+
+  // Login function
+  document.querySelector('#loginTab button').addEventListener('click', () => {
+    const email = document.querySelector('#loginTab input[type="text"]').value;
+    const password = document.querySelector('#loginTab input[type="password"]').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert('Logged in successfully!');
+      })
+      .catch((error) => {
+        alert('Login failed: ' + error.message);
+      });
+  });
+
+  // Register function
+  document.querySelector('#registerTab button').addEventListener('click', () => {
+    const email = document.querySelector('#registerTab input[type="email"]').value;
+    const password = document.querySelector('#registerTab input[type="password"]').value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert('Account created successfully!');
+      })
+      .catch((error) => {
+        alert('Registration failed: ' + error.message);
+      });
+  });
+</script>
 
 <script>
   // Функция для показа вкладки регистрации
