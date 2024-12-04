@@ -153,7 +153,7 @@
   <a href="#about">About Us</a>
   <a href="#contact">Contact</a>
   <a href="javascript:void(0);" onclick="openModal()">Account</a>
-  <a href="profile.html">My Profile</a> <!-- Добавьте ссылку на личный кабинет -->
+  <a href="profile.html" id="profileLink" style="display:none;">My Profile</a> <!-- Ссылка на личный кабинет, скрытая для неавторизованных пользователей -->
 </nav>
 
 
@@ -228,18 +228,21 @@
   const auth = getAuth();
 
   // Login function
-  document.querySelector('#loginTab button').addEventListener('click', () => {
-    const email = document.querySelector('#loginTab input[type="text"]').value;
-    const password = document.querySelector('#loginTab input[type="password"]').value;
+document.querySelector('#loginTab button').addEventListener('click', () => {
+  const email = document.querySelector('#loginTab input[type="text"]').value;
+  const password = document.querySelector('#loginTab input[type="password"]').value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        alert('Logged in successfully!');
-      })
-      .catch((error) => {
-        alert('Login failed: ' + error.message);
-      });
-  });
+  signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Успешный вход
+      alert('Logged in successfully!');
+      // Перенаправление в личный кабинет
+      window.location.href = '/profile.html';  // Замените на нужный путь
+    })
+    .catch((error) => {
+      alert('Login failed: ' + error.message);
+    });
+});
 
   // Register function
   document.querySelector('#registerTab button').addEventListener('click', () => {
