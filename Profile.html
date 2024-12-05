@@ -104,7 +104,7 @@
 <nav>
   <a href="#about">About Us</a>
   <a href="#contact">Contact</a>
-  <a href="javascript:void(0);" onclick="openModal()">Account</a>
+  <a href="javascript:void(0);" onclick="openProfilePage()">Account</a>
 </nav>
 
 <div id="profilePage" class="profile-container" style="display: none;">
@@ -179,20 +179,20 @@
   }
 
   // Функция для открытия страницы профиля
-  function openProfilePage() {
-    document.getElementById('profilePage').style.display = 'block';
-  }
+function openProfilePage() {
+  document.getElementById('profilePage').style.display = 'block'; // Показываем форму
+}
 
-  // Функция для сохранения профиля
-  function saveProfile() {
-    const profileData = {
-      name: document.getElementById('nameInput').value,
-      age: document.getElementById('ageInput').value,
-      bio: document.getElementById('bioInput').value
-    };
-    console.log('Profile saved:', profileData);
-    alert('Profile saved successfully!');
-  }
+// Функция для сохранения профиля
+function saveProfile() {
+  const profileData = {
+    name: document.getElementById('nameInput').value,
+    age: document.getElementById('ageInput').value,
+    bio: document.getElementById('bioInput').value
+  };
+  console.log('Profile saved:', profileData);
+  alert('Profile saved successfully!');
+}
 
   // Функция для открытия модального окна
   function openModal() {
