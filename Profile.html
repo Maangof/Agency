@@ -157,4 +157,56 @@
 
     // Получаем загрузочную ссылку
     const response = await fetch(`${apiUrlAuth}/b2api/v2/buckets/${bucketId}/uploadUrl`, {
-    
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + authToken
+      }
+    });
+    const data = await response.json();
+    const uploadUrl = data.uploadUrl;
+    const uploadAuthToken = data.authorizationToken;
+
+    // Загружаем файл
+    const uploadResponse = await fetch(uploadUrl, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + uploadAuthToken
+      },
+      body: new FormData().append("file", file)
+    });
+    const uploadData = await uploadResponse.json();
+    return uploadData.fileUrl;
+  }
+
+  // Функция для открытия страницы профиля
+  function openProfilePage() {
+    document.getElementById('profilePage').style.display = 'block';
+  }
+
+  // Функция для сохранения профиля
+  function saveProfile() {
+    const profileData = {
+      name: document.getElementById('nameInput').value,
+      age: document.getElementById('ageInput').value,
+      bio: document.getElementById('bioInput').value
+    };
+    console.log('Profile saved:', profileData);
+    alert('Profile saved successfully!');
+  }
+
+  // Функция для открытия модального окна
+  function openModal() {
+    window.location.href = 'https://Maangof.github.io/Agency/Profile.html';
+  }
+
+  // Проверка на авторизацию
+  window.onload = function() {
+    // Пример: если пользователь авторизован, показать профиль
+    if (localStorage.getItem("isAuthenticated") === "true") {
+      openProfilePage();
+    }
+  };
+</script>
+
+</body>
+</html>
