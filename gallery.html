@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maangoff Modeling Agency - Upload Files</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-color: #fff;
+    }
+    header {
+      background-color: #fff;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .logo-container {
+      font-family: 'Playfair Display', serif;
+    }
+    h1 {
+      font-size: 4em;
+      color: #f4d03f; /* Золотой цвет */
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2em;
+      color: #333;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+    nav {
+      background-color: #f4f4f4;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #007BFF;
+    }
+    .upload-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .upload-container h2 {
+      margin-bottom: 20px;
+    }
+    .upload-form input[type="file"] {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .upload-form button {
+      background-color: #28a745;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .upload-form button:hover {
+      background-color: #218838;
+    }
+    .upload-status {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <h1>Maangoff</h1>
+    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
+  </div>
+</header>
+
+<nav>
+  <a href="#about">About Us</a>
+  <a href="#contact">Contact</a>
+  <a href="javascript:void(0);" onclick="window.location.href='profile.html'">My Profile</a>
+</nav>
+
+<div class="upload-container">
+  <h2>Upload Files</h2>
+  <form class="upload-form">
+    <input type="file" id="fileInput" accept="image/*, .pdf, .docx" multiple>
+    <button type="button" onclick="uploadFiles()">Upload</button>
+  </form>
+  <div class="upload-status" id="uploadStatus"></div>
+</div>
+
+<footer>
+  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+</footer>
+
+<script>
+  // Настройки Backblaze B2
+  const accountId = "0033bcc15e311be0000000002";
+  const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
+  const bucketId = "930b5c5ce1d59e3391310b1e";
+  const apiUrl = "https://api.backblazeb2.com";
+
+  let authToken = "";
+  let apiUrlAuth = "";
+
+  // Получаем токен авторизации от B2
+  async function getB2AuthToken() {
+    const response = await fetch(`${apiUrl}/b2api/v2/authentication`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Basic " + btoa(accountId + ":" + applicationKey)
+      }
+    });
+    const data = await response.json();
+    authToken = data.authorizationToken;
+    apiUrlAuth = data.apiUrl;
+  }
+
+  // Загрузка файлов на B2
+  async function uploadFiles() {
+    const files = document.getElementById('fileInput').files;
+    if (files.length === 0) {
+      alert("Please select files to upload.");
+      return;
+    }
+
+    if (!authToken) await getB2AuthToken();
+
+    for (let file of files) {
+      // Получаем загрузочную ссылку
+      const response = await fetch(`${apiUrlAuth}/b2api/v2/buckets/${bucketId}/uploadUrl`, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + authToken
+        }
+      });
+      const data = await response.json();
+      const uploadUrl = data.uploadUrl;
+      const uploadAuthToken = data.authorizationToken;
+
+      // Загружаем файл
+      const formData = new FormData();
+      formData.append("file", file);
+      const uploadResponse = await fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + uploadAuthToken
+        },
+        body: formData
+      });
+      const uploadData = await uploadResponse.json();
+      document.getElementById('uploadStatus').innerText = `File uploaded successfully: ${uploadData.fileUrl}`;
+    }
+  }
+</script>
+
+</body>
+</html>
