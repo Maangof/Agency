@@ -3,81 +3,64 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maangoff Modeling Agency - Profile</title>
+  <title>User Profile</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
+      background-color: #f4f4f4;
       color: #333;
-      background-color: #fff;
     }
     header {
-      background-color: #fff;
+      background: #333;
+      color: #fff;
       text-align: center;
-      padding: 80px 0;
+      padding: 1rem 0;
     }
-    .logo-container {
-      font-family: 'Playfair Display', serif;
-    }
-    h1 {
-      font-size: 4em;
-      color: #f4d03f; /* Golden color */
-      margin: 0;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    .slogan {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2em;
-      color: #333;
-      letter-spacing: 1px;
-      margin-top: 10px;
-    }
-    nav {
-      background-color: #f4f4f4;
-      padding: 10px 0;
-      text-align: center;
-    }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #007BFF;
-    }
-    .profile-container {
+    .container {
       max-width: 600px;
       margin: 20px auto;
+      background: #fff;
       padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-    .profile-container h2 {
-      text-align: center;
-    }
-    .profile-details, .profile-form {
+    .profile-view, .profile-edit {
       display: none;
     }
-    .profile-details img {
+    .profile-view.active, .profile-edit.active {
       display: block;
-      margin: 10px auto;
-      max-width: 150px;
+    }
+    img.avatar {
+      display: block;
+      margin: 0 auto 10px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
+      object-fit: cover;
     }
-    .profile-details p {
-      font-size: 1.1em;
-      margin: 10px 0;
+    button {
+      display: inline-block;
+      padding: 10px 15px;
+      margin-top: 10px;
+      background: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .profile-form input, .profile-form textarea, .profile-form button {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #ccc;
+    button:hover {
+      background: #0056b3;
+    }
+    .gallery {
+      margin-top: 20px;
+    }
+    .gallery img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin: 5px;
       border-radius: 5px;
     }
   </style>
@@ -85,111 +68,124 @@
 <body>
 
 <header>
-  <div class="logo-container">
-    <h1>Maangoff</h1>
-    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
-  </div>
+  <h1>User Profile</h1>
 </header>
 
-<nav>
-  <a href="#profile">My Profile</a>
-  <a href="#projects">My Projects</a>
-  <a href="gallery.html">Gallery</a>
-  <a href="#settings">Settings</a>
-</nav>
-
-<div id="profilePage" class="profile-container">
-  <h2>My Profile</h2>
-
-  <!-- Static Profile Details -->
-  <div id="profileDetails" class="profile-details">
-    <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
-    <p><strong>Name:</strong> <span id="profileName">John Doe</span></p>
-    <p><strong>Age:</strong> <span id="profileAge">30</span></p>
-    <p><strong>Email:</strong> <span id="profileEmail">johndoe@email.com</span></p>
-    <p><strong>Phone:</strong> <span id="profilePhone">123-456-7890</span></p>
-    <p><strong>Biography:</strong> <span id="profileBio">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></p>
-    <button onclick="editProfile()">Edit</button>
+<div class="container">
+  <!-- Static Profile View -->
+  <div class="profile-view active" id="profileView">
+    <img src="default-avatar.jpg" alt="Avatar" class="avatar" id="avatarView">
+    <p><strong>Name:</strong> <span id="nameView">John Doe</span></p>
+    <p><strong>Age:</strong> <span id="ageView">30</span></p>
+    <p><strong>Email:</strong> <span id="emailView">john.doe@example.com</span></p>
+    <p><strong>Biography:</strong> <span id="bioView">A brief biography here...</span></p>
+    <button onclick="toggleEditMode()">Edit</button>
   </div>
 
-  <!-- Profile Edit Form -->
-  <div id="profileForm" class="profile-form">
-    <img id="profileImageInput" src="https://via.placeholder.com/150" alt="Profile Picture" style="display: block; margin: 10px auto; max-width: 150px; border-radius: 50%;">
-    <input type="file" id="profileImageUpload" accept="image/*">
-    <input type="text" id="nameInput" placeholder="Name" value="John Doe">
-    <input type="number" id="ageInput" placeholder="Age" value="30">
-    <input type="email" id="emailInput" placeholder="Email" value="johndoe@email.com">
-    <input type="tel" id="phoneInput" placeholder="Phone" value="123-456-7890">
-    <textarea id="bioInput" rows="5" placeholder="Biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
-    <button type="button" onclick="saveProfile()">Save</button>
+  <!-- Profile Edit Mode -->
+  <div class="profile-edit" id="profileEdit">
+    <label>
+      Avatar: <input type="file" id="avatarInput">
+    </label>
+    <label>
+      Name: <input type="text" id="nameInput" placeholder="Name">
+    </label>
+    <label>
+      Age: <input type="number" id="ageInput" placeholder="Age">
+    </label>
+    <label>
+      Email: <input type="email" id="emailInput" placeholder="Email">
+    </label>
+    <label>
+      Biography: <textarea id="bioInput" placeholder="Biography"></textarea>
+    </label>
+    <button onclick="saveProfile()">Save</button>
+  </div>
+
+  <!-- File Upload -->
+  <div class="gallery">
+    <h3>Gallery</h3>
+    <input type="file" id="fileInput" multiple>
+    <button onclick="uploadFiles()">Upload</button>
+    <div id="galleryContainer"></div>
   </div>
 </div>
 
-<footer>
-  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
-</footer>
-
 <script>
-  let profileData = {
-    name: 'John Doe',
-    age: 30,
-    email: 'johndoe@email.com',
-    phone: '123-456-7890',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150'
-  };
+  // Backblaze B2 credentials
+  const accountId = "0033bcc15e311be0000000002";
+  const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
+  const bucketId = "930b5c5ce1d59e3391310b1e";
 
-  // Show static profile information on page load
-  function loadProfile() {
-    document.getElementById('profileName').innerText = profileData.name;
-    document.getElementById('profileAge').innerText = profileData.age;
-    document.getElementById('profileEmail').innerText = profileData.email;
-    document.getElementById('profilePhone').innerText = profileData.phone;
-    document.getElementById('profileBio').innerText = profileData.bio;
-    document.getElementById('profileImage').src = profileData.imageUrl;
+  let authToken = "";
+  let apiUrl = "";
+
+  // Authenticate with Backblaze B2
+  async function authenticateB2() {
+    const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
+      headers: {
+        Authorization: "Basic " + btoa(`${accountId}:${applicationKey}`),
+      },
+    });
+    const data = await response.json();
+    authToken = data.authorizationToken;
+    apiUrl = data.apiUrl;
   }
 
-  // Show edit form
-  function editProfile() {
-    document.getElementById('profileDetails').style.display = 'none';
-    document.getElementById('profileForm').style.display = 'block';
+  // Upload files to B2
+  async function uploadFiles() {
+    if (!authToken) await authenticateB2();
 
-    document.getElementById('nameInput').value = profileData.name;
-    document.getElementById('ageInput').value = profileData.age;
-    document.getElementById('emailInput').value = profileData.email;
-    document.getElementById('phoneInput').value = profileData.phone;
-    document.getElementById('bioInput').value = profileData.bio;
-  }
+    const files = document.getElementById("fileInput").files;
+    for (const file of files) {
+      const uploadUrlResponse = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
+        method: "POST",
+        headers: { Authorization: authToken },
+        body: JSON.stringify({ bucketId }),
+      });
+      const uploadUrlData = await uploadUrlResponse.json();
 
-  // Save edited profile
-  function saveProfile() {
-    profileData.name = document.getElementById('nameInput').value;
-    profileData.age = document.getElementById('ageInput').value;
-    profileData.email = document.getElementById('emailInput').value;
-    profileData.phone = document.getElementById('phoneInput').value;
-    profileData.bio = document.getElementById('bioInput').value;
+      const formData = new FormData();
+      formData.append("file", file);
 
-    // Handle profile image upload
-    const profileImageFile = document.getElementById('profileImageUpload').files[0];
-    if (profileImageFile) {
-      const reader = new FileReader();
-      reader.onloadend = function() {
-        profileData.imageUrl = reader.result;
-        loadProfile();
-        document.getElementById('profileDetails').style.display = 'block';
-        document.getElementById('profileForm').style.display = 'none';
-      };
-      reader.readAsDataURL(profileImageFile);
-    } else {
-      loadProfile();
-      document.getElementById('profileDetails').style.display = 'block';
-      document.getElementById('profileForm').style.display = 'none';
+      const uploadResponse = await fetch(uploadUrlData.uploadUrl, {
+        method: "POST",
+        headers: { Authorization: uploadUrlData.authorizationToken },
+        body: formData,
+      });
+
+      const uploadData = await uploadResponse.json();
+      const imageUrl = `${uploadData.fileId}`;
+      displayImage(imageUrl);
     }
   }
 
-  window.onload = function() {
-    loadProfile(); // Load static profile information on page load
-  };
+  function displayImage(url) {
+    const img = document.createElement("img");
+    img.src = url;
+    document.getElementById("galleryContainer").appendChild(img);
+  }
+
+  // Toggle between view and edit mode
+  function toggleEditMode() {
+    document.getElementById("profileView").classList.toggle("active");
+    document.getElementById("profileEdit").classList.toggle("active");
+  }
+
+  // Save profile changes
+  function saveProfile() {
+    const name = document.getElementById("nameInput").value;
+    const age = document.getElementById("ageInput").value;
+    const email = document.getElementById("emailInput").value;
+    const bio = document.getElementById("bioInput").value;
+
+    document.getElementById("nameView").textContent = name;
+    document.getElementById("ageView").textContent = age;
+    document.getElementById("emailView").textContent = email;
+    document.getElementById("bioView").textContent = bio;
+
+    toggleEditMode();
+  }
 </script>
 
 </body>
