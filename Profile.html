@@ -132,38 +132,85 @@
     apiUrl = data.apiUrl;
   }
 
-  // Upload files to B2
-  async function uploadFiles() {
+  // Upload JSON profile to B2
+  async function uploadProfileToB2(profileData) {
     if (!authToken) await authenticateB2();
 
-    const files = document.getElementById("fileInput").files;
-    for (const file of files) {
-      const uploadUrlResponse = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
-        method: "POST",
-        headers: { Authorization: authToken },
-        body: JSON.stringify({ bucketId }),
-      });
-      const uploadUrlData = await uploadUrlResponse.json();
+    // Get upload URL
+    const uploadUrlResponse = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
+      method: "POST",
+      headers: { Authorization: authToken },
+      body: JSON.stringify({ bucketId }),
+    });
+    const uploadUrlData = await uploadUrlResponse.json();
 
-      const formData = new FormData();
-      formData.append("file", file);
+    // Create JSON file
+    const jsonBlob = new Blob([JSON.stringify(profileData)], { type: "application/json" });
+    const formData = new FormData();
+    formData.append("file", jsonBlob, "profile.json");
 
-      const uploadResponse = await fetch(uploadUrlData.uploadUrl, {
-        method: "POST",
-        headers: { Authorization: uploadUrlData.authorizationToken },
-        body: formData,
-      });
+    // Upload JSON to B2
+    const uploadResponse = await fetch(uploadUrlData.uploadUrl, {
+      method: "POST",
+      headers: { Authorization: uploadUrlData.authorizationToken },
+      body: formData,
+    });
 
-      const uploadData = await uploadResponse.json();
-      const imageUrl = `${uploadData.fileId}`;
-      displayImage(imageUrl);
+    const uploadData = await uploadResponse.json();
+    return `${apiUrl}/file/${bucketId}/${uploadData.fileName}`;
+  }
+
+  // Download JSON profile from B2
+  async function downloadProfileFromB2() {
+    if (!authToken) await authenticateB2();
+
+    const fileName = "profile.json";
+    const downloadUrl = `${apiUrl}/file/${bucketId}/${fileName}`;
+
+    const response = await fetch(downloadUrl, {
+      headers: { Authorization: authToken },
+    });
+
+    if (response.ok) {
+      const profileData = await response.json();
+      return profileData;
+    } else {
+      console.error("Failed to load profile:", response.status);
+      return null;
     }
   }
 
-  function displayImage(url) {
-    const img = document.createElement("img");
-    img.src = url;
-    document.getElementById("galleryContainer").appendChild(img);
+  // Save profile
+  async function saveProfile() {
+    const profileData = {
+      name: document.getElementById("nameInput").value,
+      age: document.getElementById("ageInput").value,
+      email: document.getElementById("emailInput").value,
+      bio: document.getElementById("bioInput").value,
+    };
+
+    // Upload profile to B2
+    try {
+      const url = await uploadProfileToB2(profileData);
+      console.log("Profile saved:", url);
+      alert("Profile saved successfully!");
+      toggleEditMode();
+      loadProfile(); // Update the profile view
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      alert("Failed to save profile.");
+    }
+  }
+
+  // Load profile
+  async function loadProfile() {
+    const profileData = await downloadProfileFromB2();
+    if (profileData) {
+      document.getElementById("nameView").textContent = profileData.name || "N/A";
+      document.getElementById("ageView").textContent = profileData.age || "N/A";
+      document.getElementById("emailView").textContent = profileData.email || "N/A";
+      document.getElementById("bioView").textContent = profileData.bio || "N/A";
+    }
   }
 
   // Toggle between view and edit mode
@@ -172,20 +219,10 @@
     document.getElementById("profileEdit").classList.toggle("active");
   }
 
-  // Save profile changes
-  function saveProfile() {
-    const name = document.getElementById("nameInput").value;
-    const age = document.getElementById("ageInput").value;
-    const email = document.getElementById("emailInput").value;
-    const bio = document.getElementById("bioInput").value;
-
-    document.getElementById("nameView").textContent = name;
-    document.getElementById("ageView").textContent = age;
-    document.getElementById("emailView").textContent = email;
-    document.getElementById("bioView").textContent = bio;
-
-    toggleEditMode();
-  }
+  // Initialize
+  window.onload = function () {
+    loadProfile();
+  };
 </script>
 
 </body>
