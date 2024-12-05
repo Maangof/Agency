@@ -60,24 +60,25 @@
     .profile-container h2 {
       text-align: center;
     }
+    .profile-details, .profile-form {
+      display: none;
+    }
+    .profile-details img {
+      display: block;
+      margin: 10px auto;
+      max-width: 150px;
+      border-radius: 50%;
+    }
+    .profile-details p {
+      font-size: 1.1em;
+      margin: 10px 0;
+    }
     .profile-form input, .profile-form textarea, .profile-form button {
       width: 100%;
       margin-bottom: 10px;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 5px;
-    }
-    .profile-form img {
-      display: block;
-      margin: 10px auto;
-      max-width: 150px;
-      border-radius: 50%;
-    }
-    .gallery-container {
-      margin-top: 20px;
-    }
-    .gallery-container input {
-      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -93,21 +94,35 @@
 <nav>
   <a href="#profile">My Profile</a>
   <a href="#projects">My Projects</a>
-  <a href="gallery.html">Gallery</a> <!-- Link to gallery.html -->
+  <a href="gallery.html">Gallery</a>
   <a href="#settings">Settings</a>
 </nav>
 
 <div id="profilePage" class="profile-container">
   <h2>My Profile</h2>
-  <form id="profileForm" class="profile-form">
+
+  <!-- Static Profile Details -->
+  <div id="profileDetails" class="profile-details">
     <img id="profileImage" src="" alt="Profile Picture">
-    <input type="file" id="profileImageInput" accept="image/*">
+    <p><strong>Name:</strong> <span id="profileName">John Doe</span></p>
+    <p><strong>Age:</strong> <span id="profileAge">30</span></p>
+    <p><strong>Email:</strong> <span id="profileEmail">johndoe@email.com</span></p>
+    <p><strong>Phone:</strong> <span id="profilePhone">123-456-7890</span></p>
+    <p><strong>Biography:</strong> <span id="profileBio">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></p>
+    <button onclick="editProfile()">Edit</button>
+  </div>
+
+  <!-- Profile Edit Form -->
+  <div id="profileForm" class="profile-form">
+    <img id="profileImageInput" src="" alt="Profile Picture" style="display: block; margin: 10px auto; max-width: 150px; border-radius: 50%;">
+    <input type="file" id="profileImageUpload" accept="image/*">
     <input type="text" id="nameInput" placeholder="Name">
+    <input type="number" id="ageInput" placeholder="Age">
     <input type="email" id="emailInput" placeholder="Email">
     <input type="tel" id="phoneInput" placeholder="Phone">
     <textarea id="bioInput" rows="5" placeholder="Biography"></textarea>
-    <button type="button" onclick="saveProfile()">Save Profile</button>
-  </form>
+    <button type="button" onclick="saveProfile()">Save</button>
+  </div>
 </div>
 
 <footer>
@@ -115,82 +130,69 @@
 </footer>
 
 <script>
-  // Token and API URL for Backblaze B2 configuration
-  const accountId = "0033bcc15e311be0000000002";
-  const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
-  const bucketId = "930b5c5ce1d59e3391310b1e";
-  const apiUrl = "https://api.backblazeb2.com";
+  let profileData = {
+    name: 'John Doe',
+    age: 30,
+    email: 'johndoe@email.com',
+    phone: '123-456-7890',
+    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    imageUrl: ''
+  };
 
-  let authToken = "";
-  let apiUrlAuth = "";
+  // Show static profile information on page load
+  function loadProfile() {
+    document.getElementById('profileName').innerText = profileData.name;
+    document.getElementById('profileAge').innerText = profileData.age;
+    document.getElementById('profileEmail').innerText = profileData.email;
+    document.getElementById('profilePhone').innerText = profileData.phone;
+    document.getElementById('profileBio').innerText = profileData.bio;
 
-  // Fetch authentication token from B2
-  async function getB2AuthToken() {
-    const response = await fetch(`${apiUrl}/b2api/v2/authentication`, {
-      method: "POST",
-      headers: {
-        "Authorization": "Basic " + btoa(accountId + ":" + applicationKey)
-      }
-    });
-    const data = await response.json();
-    authToken = data.authorizationToken;
-    apiUrlAuth = data.apiUrl;
+    if (profileData.imageUrl) {
+      document.getElementById('profileImage').src = profileData.imageUrl;
+    }
   }
 
-  // Function to upload image to Backblaze B2
-  async function uploadToB2(file) {
-    if (!authToken) await getB2AuthToken();
+  // Show edit form
+  function editProfile() {
+    document.getElementById('profileDetails').style.display = 'none';
+    document.getElementById('profileForm').style.display = 'block';
 
-    const response = await fetch(`${apiUrlAuth}/b2api/v2/buckets/${bucketId}/uploadUrl`, {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + authToken
-      }
-    });
-    const data = await response.json();
-    const uploadUrl = data.uploadUrl;
-    const uploadAuthToken = data.authorizationToken;
-
-    // Upload the file
-    const uploadResponse = await fetch(uploadUrl, {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + uploadAuthToken
-      },
-      body: new FormData().append("file", file)
-    });
-    const uploadData = await uploadResponse.json();
-    return uploadData.fileUrl;
+    document.getElementById('nameInput').value = profileData.name;
+    document.getElementById('ageInput').value = profileData.age;
+    document.getElementById('emailInput').value = profileData.email;
+    document.getElementById('phoneInput').value = profileData.phone;
+    document.getElementById('bioInput').value = profileData.bio;
   }
 
-  // Save profile information
+  // Save edited profile
   function saveProfile() {
-    const profileData = {
-      name: document.getElementById('nameInput').value,
-      email: document.getElementById('emailInput').value,
-      phone: document.getElementById('phoneInput').value,
-      bio: document.getElementById('bioInput').value
-    };
+    profileData.name = document.getElementById('nameInput').value;
+    profileData.age = document.getElementById('ageInput').value;
+    profileData.email = document.getElementById('emailInput').value;
+    profileData.phone = document.getElementById('phoneInput').value;
+    profileData.bio = document.getElementById('bioInput').value;
 
-    const profileImageInput = document.getElementById('profileImageInput').files[0];
-    if (profileImageInput) {
-      uploadToB2(profileImageInput).then((imageUrl) => {
-        profileData.profileImage = imageUrl;
-        console.log('Profile saved:', profileData);
-        alert('Profile saved successfully!');
-      });
+    // Handle profile image upload
+    const profileImageFile = document.getElementById('profileImageUpload').files[0];
+    if (profileImageFile) {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        profileData.imageUrl = reader.result;
+        loadProfile();
+        document.getElementById('profileImage').src = profileData.imageUrl;
+        document.getElementById('profileDetails').style.display = 'block';
+        document.getElementById('profileForm').style.display = 'none';
+      };
+      reader.readAsDataURL(profileImageFile);
     } else {
-      console.log('Profile saved:', profileData);
-      alert('Profile saved successfully!');
+      loadProfile();
+      document.getElementById('profileDetails').style.display = 'block';
+      document.getElementById('profileForm').style.display = 'none';
     }
   }
 
-  // Check authentication status on page load
   window.onload = function() {
-    if (localStorage.getItem("isAuthenticated") === "true") {
-      // Show the profile page if user is authenticated
-      document.getElementById('profilePage').style.display = 'block';
-    }
+    loadProfile(); // Load static profile information on page load
   };
 </script>
 
