@@ -3,227 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
+  <title>My Profile - Maangoff</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background: linear-gradient(to bottom, #f5f7fa, #e4e9f0);
       color: #333;
     }
     header {
-      background: #333;
-      color: #fff;
       text-align: center;
-      padding: 1rem 0;
+      padding: 20px;
+      background: #007bff;
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      font-weight: 600;
     }
     .container {
-      max-width: 600px;
+      max-width: 900px;
       margin: 20px auto;
-      background: #fff;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    .profile-view, .profile-edit {
-      display: none;
+    .profile-header {
+      text-align: center;
     }
-    .profile-view.active, .profile-edit.active {
-      display: block;
-    }
-    img.avatar {
-      display: block;
-      margin: 0 auto 10px;
-      width: 100px;
-      height: 100px;
+    .profile-header img {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       object-fit: cover;
+      border: 3px solid #007bff;
+      margin-bottom: 10px;
     }
-    button {
-      display: inline-block;
-      padding: 10px 15px;
-      margin-top: 10px;
-      background: #007BFF;
-      color: #fff;
+    .profile-header h2 {
+      margin: 10px 0 5px;
+      font-weight: 600;
+      font-size: 1.8em;
+    }
+    .profile-header p {
+      color: #555;
+    }
+    .profile-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+    .profile-actions button {
+      background: #007bff;
+      color: white;
       border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .gallery {
-      margin-top: 20px;
-    }
-    .gallery img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+      padding: 10px 20px;
       margin: 5px;
       border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .profile-actions button:hover {
+      background: #0056b3;
+    }
+    .edit-form {
+      display: none;
+    }
+    .edit-form.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .edit-form input, .edit-form textarea {
+      width: calc(100% - 20px);
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-
-<header>
-  <h1>User Profile</h1>
-</header>
-
-<div class="container">
-  <!-- Static Profile View -->
-  <div class="profile-view active" id="profileView">
-    <img src="default-avatar.jpg" alt="Avatar" class="avatar" id="avatarView">
-    <p><strong>Name:</strong> <span id="nameView">John Doe</span></p>
-    <p><strong>Age:</strong> <span id="ageView">30</span></p>
-    <p><strong>Email:</strong> <span id="emailView">john.doe@example.com</span></p>
-    <p><strong>Biography:</strong> <span id="bioView">A brief biography here...</span></p>
-    <button onclick="toggleEditMode()">Edit</button>
+  <header>
+    <h1>My Profile</h1>
+  </header>
+  <div class="container">
+    <div class="profile-header">
+      <img id="profileImage" src="https://via.placeholder.com/120" alt="Profile Picture">
+      <h2 id="profileName">John Doe</h2>
+      <p id="profileBio">A short biography goes here.</p>
+    </div>
+    <div class="profile-actions">
+      <button onclick="toggleEditForm()">Edit Profile</button>
+      <button onclick="window.location.href='gallery.html'">Gallery</button>
+    </div>
+    <form id="editForm" class="edit-form">
+      <input type="text" id="nameInput" placeholder="Name" value="John Doe">
+      <input type="text" id="emailInput" placeholder="Email" value="john.doe@example.com">
+      <input type="text" id="phoneInput" placeholder="Phone" value="+123456789">
+      <textarea id="bioInput" rows="4" placeholder="Biography">A short biography goes here.</textarea>
+      <button type="button" onclick="saveProfile()">Save</button>
+    </form>
   </div>
 
-  <!-- Profile Edit Mode -->
-  <div class="profile-edit" id="profileEdit">
-    <label>
-      Avatar: <input type="file" id="avatarInput">
-    </label>
-    <label>
-      Name: <input type="text" id="nameInput" placeholder="Name">
-    </label>
-    <label>
-      Age: <input type="number" id="ageInput" placeholder="Age">
-    </label>
-    <label>
-      Email: <input type="email" id="emailInput" placeholder="Email">
-    </label>
-    <label>
-      Biography: <textarea id="bioInput" placeholder="Biography"></textarea>
-    </label>
-    <button onclick="saveProfile()">Save</button>
-  </div>
+  <script>
+    // Настройки Backblaze B2
+    const accountId = "0033bcc15e311be0000000002";
+    const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
+    const bucketId = "930b5c5ce1d59e3391310b1e";
+    let apiUrl = "";
+    let authToken = "";
 
-  <!-- File Upload -->
-  <div class="gallery">
-    <h3>Gallery</h3>
-    <input type="file" id="fileInput" multiple>
-    <button onclick="uploadFiles()">Upload</button>
-    <div id="galleryContainer"></div>
-  </div>
-</div>
-
-<script>
-  // Backblaze B2 credentials
-  const accountId = "0033bcc15e311be0000000002";
-  const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
-  const bucketId = "930b5c5ce1d59e3391310b1e";
-
-  let authToken = "";
-  let apiUrl = "";
-
-  // Authenticate with Backblaze B2
-  async function authenticateB2() {
-    const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
-      headers: {
-        Authorization: "Basic " + btoa(`${accountId}:${applicationKey}`),
-      },
-    });
-    const data = await response.json();
-    authToken = data.authorizationToken;
-    apiUrl = data.apiUrl;
-  }
-
-  // Upload JSON profile to B2
-  async function uploadProfileToB2(profileData) {
-    if (!authToken) await authenticateB2();
-
-    // Get upload URL
-    const uploadUrlResponse = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
-      method: "POST",
-      headers: { Authorization: authToken },
-      body: JSON.stringify({ bucketId }),
-    });
-    const uploadUrlData = await uploadUrlResponse.json();
-
-    // Create JSON file
-    const jsonBlob = new Blob([JSON.stringify(profileData)], { type: "application/json" });
-    const formData = new FormData();
-    formData.append("file", jsonBlob, "profile.json");
-
-    // Upload JSON to B2
-    const uploadResponse = await fetch(uploadUrlData.uploadUrl, {
-      method: "POST",
-      headers: { Authorization: uploadUrlData.authorizationToken },
-      body: formData,
-    });
-
-    const uploadData = await uploadResponse.json();
-    return `${apiUrl}/file/${bucketId}/${uploadData.fileName}`;
-  }
-
-  // Download JSON profile from B2
-  async function downloadProfileFromB2() {
-    if (!authToken) await authenticateB2();
-
-    const fileName = "profile.json";
-    const downloadUrl = `${apiUrl}/file/${bucketId}/${fileName}`;
-
-    const response = await fetch(downloadUrl, {
-      headers: { Authorization: authToken },
-    });
-
-    if (response.ok) {
-      const profileData = await response.json();
-      return profileData;
-    } else {
-      console.error("Failed to load profile:", response.status);
-      return null;
+    // Функция получения токена B2
+    async function authenticateB2() {
+      const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
+        headers: {
+          Authorization: "Basic " + btoa(accountId + ":" + applicationKey),
+        },
+      });
+      const data = await response.json();
+      apiUrl = data.apiUrl;
+      authToken = data.authorizationToken;
     }
-  }
 
-  // Save profile
-  async function saveProfile() {
-    const profileData = {
-      name: document.getElementById("nameInput").value,
-      age: document.getElementById("ageInput").value,
-      email: document.getElementById("emailInput").value,
-      bio: document.getElementById("bioInput").value,
-    };
-
-    // Upload profile to B2
-    try {
-      const url = await uploadProfileToB2(profileData);
-      console.log("Profile saved:", url);
-      alert("Profile saved successfully!");
-      toggleEditMode();
-      loadProfile(); // Update the profile view
-    } catch (error) {
-      console.error("Error saving profile:", error);
-      alert("Failed to save profile.");
+    // Функция загрузки данных профиля
+    async function loadProfile() {
+      await authenticateB2();
+      const response = await fetch(`${apiUrl}/b2api/v2/b2_list_file_names`, {
+        method: "POST",
+        headers: { Authorization: authToken },
+        body: JSON.stringify({ bucketId }),
+      });
+      const data = await response.json();
+      const profileFile = data.files.find(file => file.fileName === "profile.json");
+      if (profileFile) {
+        const profileResponse = await fetch(`${apiUrl}/file/${bucketId}/${profileFile.fileName}`, {
+          headers: { Authorization: authToken },
+        });
+        const profile = await profileResponse.json();
+        document.getElementById("profileName").textContent = profile.name;
+        document.getElementById("profileBio").textContent = profile.bio;
+        document.getElementById("nameInput").value = profile.name;
+        document.getElementById("bioInput").value = profile.bio;
+      }
     }
-  }
 
-  // Load profile
-  async function loadProfile() {
-    const profileData = await downloadProfileFromB2();
-    if (profileData) {
-      document.getElementById("nameView").textContent = profileData.name || "N/A";
-      document.getElementById("ageView").textContent = profileData.age || "N/A";
-      document.getElementById("emailView").textContent = profileData.email || "N/A";
-      document.getElementById("bioView").textContent = profileData.bio || "N/A";
+    // Функция сохранения профиля
+    async function saveProfile() {
+      const profileData = {
+        name: document.getElementById("nameInput").value,
+        bio: document.getElementById("bioInput").value,
+      };
+
+      await authenticateB2();
+      const uploadUrlResponse = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
+        method: "POST",
+        headers: { Authorization: authToken },
+        body: JSON.stringify({ bucketId }),
+      });
+      const uploadUrlData = await uploadUrlResponse.json();
+
+      const formData = new FormData();
+      formData.append("file", new Blob([JSON.stringify(profileData)], { type: "application/json" }));
+      formData.append("fileName", "profile.json");
+
+      await fetch(uploadUrlData.uploadUrl, {
+        method: "POST",
+        headers: { Authorization: uploadUrlData.authorizationToken },
+        body: formData,
+      });
+
+      toggleEditForm();
+      loadProfile();
     }
-  }
 
-  // Toggle between view and edit mode
-  function toggleEditMode() {
-    document.getElementById("profileView").classList.toggle("active");
-    document.getElementById("profileEdit").classList.toggle("active");
-  }
+    // Функция переключения формы
+    function toggleEditForm() {
+      document.getElementById("editForm").classList.toggle("active");
+    }
 
-  // Initialize
-  window.onload = function () {
-    loadProfile();
-  };
-</script>
-
+    // Загрузка профиля при открытии страницы
+    window.onload = loadProfile;
+  </script>
 </body>
 </html>
