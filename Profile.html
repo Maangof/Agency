@@ -103,7 +103,7 @@
 
   <!-- Static Profile Details -->
   <div id="profileDetails" class="profile-details">
-    <img id="profileImage" src="" alt="Profile Picture">
+    <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
     <p><strong>Name:</strong> <span id="profileName">John Doe</span></p>
     <p><strong>Age:</strong> <span id="profileAge">30</span></p>
     <p><strong>Email:</strong> <span id="profileEmail">johndoe@email.com</span></p>
@@ -114,13 +114,13 @@
 
   <!-- Profile Edit Form -->
   <div id="profileForm" class="profile-form">
-    <img id="profileImageInput" src="" alt="Profile Picture" style="display: block; margin: 10px auto; max-width: 150px; border-radius: 50%;">
+    <img id="profileImageInput" src="https://via.placeholder.com/150" alt="Profile Picture" style="display: block; margin: 10px auto; max-width: 150px; border-radius: 50%;">
     <input type="file" id="profileImageUpload" accept="image/*">
-    <input type="text" id="nameInput" placeholder="Name">
-    <input type="number" id="ageInput" placeholder="Age">
-    <input type="email" id="emailInput" placeholder="Email">
-    <input type="tel" id="phoneInput" placeholder="Phone">
-    <textarea id="bioInput" rows="5" placeholder="Biography"></textarea>
+    <input type="text" id="nameInput" placeholder="Name" value="John Doe">
+    <input type="number" id="ageInput" placeholder="Age" value="30">
+    <input type="email" id="emailInput" placeholder="Email" value="johndoe@email.com">
+    <input type="tel" id="phoneInput" placeholder="Phone" value="123-456-7890">
+    <textarea id="bioInput" rows="5" placeholder="Biography">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
     <button type="button" onclick="saveProfile()">Save</button>
   </div>
 </div>
@@ -136,7 +136,7 @@
     email: 'johndoe@email.com',
     phone: '123-456-7890',
     bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: ''
+    imageUrl: 'https://via.placeholder.com/150'
   };
 
   // Show static profile information on page load
@@ -146,10 +146,7 @@
     document.getElementById('profileEmail').innerText = profileData.email;
     document.getElementById('profilePhone').innerText = profileData.phone;
     document.getElementById('profileBio').innerText = profileData.bio;
-
-    if (profileData.imageUrl) {
-      document.getElementById('profileImage').src = profileData.imageUrl;
-    }
+    document.getElementById('profileImage').src = profileData.imageUrl;
   }
 
   // Show edit form
@@ -179,7 +176,6 @@
       reader.onloadend = function() {
         profileData.imageUrl = reader.result;
         loadProfile();
-        document.getElementById('profileImage').src = profileData.imageUrl;
         document.getElementById('profileDetails').style.display = 'block';
         document.getElementById('profileForm').style.display = 'none';
       };
