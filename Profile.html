@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maangoff Modeling Agency - Dashboard</title>
+  <title>Maangoff Modeling Agency - Profile</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,14 +15,25 @@
     header {
       background-color: #fff;
       text-align: center;
-      padding: 50px 0;
+      padding: 80px 0;
     }
-    .logo-container h1 {
-      font-size: 3em;
-      color: #f4d03f;
+    .logo-container {
+      font-family: 'Playfair Display', serif;
+    }
+    h1 {
+      font-size: 4em;
+      color: #f4d03f; /* Golden color */
       margin: 0;
       letter-spacing: 2px;
       text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2em;
+      color: #333;
+      letter-spacing: 1px;
+      margin-top: 10px;
     }
     nav {
       background-color: #f4f4f4;
@@ -38,13 +49,16 @@
     nav a:hover {
       color: #007BFF;
     }
-    .dashboard {
-      max-width: 800px;
+    .profile-container {
+      max-width: 600px;
       margin: 20px auto;
       padding: 20px;
       background-color: #f9f9f9;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .profile-container h2 {
+      text-align: center;
     }
     .profile-form input, .profile-form textarea, .profile-form button {
       width: 100%;
@@ -53,28 +67,17 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    .gallery-container input {
-      margin-bottom: 10px;
-    }
-    .gallery-container button {
-      background-color: #28a745;
-      color: #fff;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .gallery-container button:hover {
-      background-color: #218838;
-    }
-    .uploaded-files {
-      margin-top: 10px;
-    }
-    .uploaded-files a {
+    .profile-form img {
       display: block;
-      color: #007BFF;
-      text-decoration: none;
-      margin-top: 5px;
+      margin: 10px auto;
+      max-width: 150px;
+      border-radius: 50%;
+    }
+    .gallery-container {
+      margin-top: 20px;
+    }
+    .gallery-container input {
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -82,103 +85,113 @@
 
 <header>
   <div class="logo-container">
-    <h1>Maangoff Dashboard</h1>
+    <h1>Maangoff</h1>
+    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
   </div>
 </header>
 
 <nav>
-  <a href="#about">About Us</a>
-  <a href="#contact">Contact</a>
-  <a href="javascript:void(0);" onclick="openDashboard()">Dashboard</a>
+  <a href="#profile">My Profile</a>
+  <a href="#projects">My Projects</a>
+  <a href="gallery.html">Gallery</a> <!-- Link to gallery.html -->
+  <a href="#settings">Settings</a>
 </nav>
 
-<div id="dashboard" class="dashboard" style="display: none;">
-  <h2>File Upload</h2>
-  <div class="gallery-container">
-    <input type="file" id="fileInput" multiple>
-    <button onclick="uploadFiles()">Upload to Cloud</button>
-    <div class="uploaded-files" id="uploadedFiles"></div>
-  </div>
+<div id="profilePage" class="profile-container">
+  <h2>My Profile</h2>
+  <form id="profileForm" class="profile-form">
+    <img id="profileImage" src="" alt="Profile Picture">
+    <input type="file" id="profileImageInput" accept="image/*">
+    <input type="text" id="nameInput" placeholder="Name">
+    <input type="email" id="emailInput" placeholder="Email">
+    <input type="tel" id="phoneInput" placeholder="Phone">
+    <textarea id="bioInput" rows="5" placeholder="Biography"></textarea>
+    <button type="button" onclick="saveProfile()">Save Profile</button>
+  </form>
 </div>
 
+<footer>
+  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+</footer>
+
 <script>
-  // Backblaze B2 Credentials
+  // Token and API URL for Backblaze B2 configuration
   const accountId = "0033bcc15e311be0000000002";
   const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
   const bucketId = "930b5c5ce1d59e3391310b1e";
+  const apiUrl = "https://api.backblazeb2.com";
 
   let authToken = "";
-  let apiUrl = "";
+  let apiUrlAuth = "";
 
-  // Get B2 Auth Token
+  // Fetch authentication token from B2
   async function getB2AuthToken() {
-    const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_authorize_account", {
-      method: "GET",
+    const response = await fetch(`${apiUrl}/b2api/v2/authentication`, {
+      method: "POST",
       headers: {
-        "Authorization": "Basic " + btoa(`${accountId}:${applicationKey}`)
+        "Authorization": "Basic " + btoa(accountId + ":" + applicationKey)
       }
     });
     const data = await response.json();
     authToken = data.authorizationToken;
-    apiUrl = data.apiUrl;
+    apiUrlAuth = data.apiUrl;
   }
 
-  // Get Upload URL
-  async function getUploadUrl() {
-    const response = await fetch(`${apiUrl}/b2api/v2/b2_get_upload_url`, {
-      method: "POST",
-      headers: {
-        "Authorization": authToken,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ bucketId })
-    });
-    return response.json();
-  }
-
-  // Upload File to B2
-  async function uploadFile(file) {
-    const { uploadUrl, authorizationToken } = await getUploadUrl();
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
-
-    const response = await fetch(uploadUrl, {
-      method: "POST",
-      headers: {
-        "Authorization": authorizationToken
-      },
-      body: formData
-    });
-    return response.json();
-  }
-
-  // Upload Files Handler
-  async function uploadFiles() {
+  // Function to upload image to Backblaze B2
+  async function uploadToB2(file) {
     if (!authToken) await getB2AuthToken();
 
-    const files = document.getElementById("fileInput").files;
-    const uploadedFilesContainer = document.getElementById("uploadedFiles");
-    uploadedFilesContainer.innerHTML = "";
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      try {
-        const uploadResult = await uploadFile(file);
-        const fileUrl = `${apiUrl}/file/${bucketId}/${file.name}`;
-        uploadedFilesContainer.innerHTML += `<a href="${fileUrl}" target="_blank">${file.name}</a>`;
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        uploadedFilesContainer.innerHTML += `<p style="color: red;">Failed to upload ${file.name}</p>`;
+    const response = await fetch(`${apiUrlAuth}/b2api/v2/buckets/${bucketId}/uploadUrl`, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + authToken
       }
+    });
+    const data = await response.json();
+    const uploadUrl = data.uploadUrl;
+    const uploadAuthToken = data.authorizationToken;
+
+    // Upload the file
+    const uploadResponse = await fetch(uploadUrl, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + uploadAuthToken
+      },
+      body: new FormData().append("file", file)
+    });
+    const uploadData = await uploadResponse.json();
+    return uploadData.fileUrl;
+  }
+
+  // Save profile information
+  function saveProfile() {
+    const profileData = {
+      name: document.getElementById('nameInput').value,
+      email: document.getElementById('emailInput').value,
+      phone: document.getElementById('phoneInput').value,
+      bio: document.getElementById('bioInput').value
+    };
+
+    const profileImageInput = document.getElementById('profileImageInput').files[0];
+    if (profileImageInput) {
+      uploadToB2(profileImageInput).then((imageUrl) => {
+        profileData.profileImage = imageUrl;
+        console.log('Profile saved:', profileData);
+        alert('Profile saved successfully!');
+      });
+    } else {
+      console.log('Profile saved:', profileData);
+      alert('Profile saved successfully!');
     }
   }
 
-  // Open Dashboard
-  function openDashboard() {
-    document.getElementById("dashboard").style.display = "block";
-  }
+  // Check authentication status on page load
+  window.onload = function() {
+    if (localStorage.getItem("isAuthenticated") === "true") {
+      // Show the profile page if user is authenticated
+      document.getElementById('profilePage').style.display = 'block';
+    }
+  };
 </script>
 
 </body>
