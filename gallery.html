@@ -83,6 +83,23 @@
       font-size: 1.2em;
       color: #333;
     }
+    .loader {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,19 +131,15 @@
 </footer>
 
 <script>
-  // Настройки Backblaze B2
   const accountId = "0033bcc15e311be0000000002";
   const applicationKey = "K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I";
   const bucketId = "930b5c5ce1d59e3391310b1e";
   const apiUrl = "https://api.backblazeb2.com";
-
   let authToken = "";
   let apiUrlAuth = "";
 
-  // Получаем токен авторизации от B2
   async function getB2AuthToken() {
-    const response = await fetch(`${apiUrl}/b2api/v2/authentication`, {
-      method: "POST",
+    const response = await fetch(`${apiUrl}/b2api/v2/b2_authorize_account`, {
       headers: {
         "Authorization": "Basic " + btoa(accountId + ":" + applicationKey)
       }
@@ -136,40 +149,43 @@
     apiUrlAuth = data.apiUrl;
   }
 
-  // Загрузка файлов на B2
   async function uploadFiles() {
     const files = document.getElementById('fileInput').files;
+    const statusElement = document.getElementById('uploadStatus');
+    statusElement.innerHTML = '<div class="loader"></div> Uploading...';
+
     if (files.length === 0) {
-      alert("Please select files to upload.");
+      statusElement.textContent = "Please select files to upload.";
       return;
     }
 
     if (!authToken) await getB2AuthToken();
 
-    for (let file of files) {
-      // Получаем загрузочную ссылку
-      const response = await fetch(`${apiUrlAuth}/b2api/v2/buckets/${bucketId}/uploadUrl`, {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + authToken
-        }
-      });
-      const data = await response.json();
-      const uploadUrl = data.uploadUrl;
-      const uploadAuthToken = data.authorizationToken;
+    try {
+      for (let file of files) {
+        const uploadUrlResponse = await fetch(`${apiUrlAuth}/b2api/v2/b2_get_upload_url`, {
+          method: "POST",
+          headers: { "Authorization": authToken },
+          body: JSON.stringify({ bucketId })
+        });
+        const uploadUrlData = await uploadUrlResponse.json();
+        const uploadUrl = uploadUrlData.uploadUrl;
+        const uploadAuthToken = uploadUrlData.authorizationToken;
 
-      // Загружаем файл
-      const formData = new FormData();
-      formData.append("file", file);
-      const uploadResponse = await fetch(uploadUrl, {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer " + uploadAuthToken
-        },
-        body: formData
-      });
-      const uploadData = await uploadResponse.json();
-      document.getElementById('uploadStatus').innerText = `File uploaded successfully: ${uploadData.fileUrl}`;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("fileName", file.name);
+
+        await fetch(uploadUrl, {
+          method: "POST",
+          headers: { "Authorization": uploadAuthToken },
+          body: formData
+        });
+      }
+      statusElement.textContent = "Files uploaded successfully!";
+    } catch (error) {
+      statusElement.textContent = "An error occurred during upload.";
+      console.error(error);
     }
   }
 </script>
