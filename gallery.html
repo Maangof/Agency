@@ -180,12 +180,10 @@
       const uploadUrl = uploadUrlData.uploadUrl;
       const uploadAuthToken = uploadUrlData.authorizationToken;
 
-      // Подготовка файла к загрузке
+      // Загрузка файла
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("fileName", file.name);
 
-      // Загрузка файла
       const uploadResponse = await fetch(uploadUrl, {
         method: "POST",
         headers: { "Authorization": uploadAuthToken },
@@ -199,12 +197,14 @@
       const uploadData = await uploadResponse.json();
       console.log("Upload successful:", uploadData);
 
-      // Отображение результата
-      statusElement.textContent = `File "${file.name}" uploaded successfully!`;
+      // Обновление статуса
+      statusElement.innerHTML += `<p>File "${file.name}" uploaded successfully!</p>`;
     }
   } catch (error) {
     statusElement.textContent = `Error: ${error.message}`;
     console.error(error);
+  } finally {
+    statusElement.innerHTML += '<p>Upload complete!</p>';
   }
 }
 </script>
