@@ -150,44 +150,63 @@
   }
 
   async function uploadFiles() {
-    const files = document.getElementById('fileInput').files;
-    const statusElement = document.getElementById('uploadStatus');
-    statusElement.innerHTML = '<div class="loader"></div> Uploading...';
+  const files = document.getElementById('fileInput').files;
+  const statusElement = document.getElementById('uploadStatus');
+  statusElement.innerHTML = '<div class="loader"></div> Uploading...';
 
-    if (files.length === 0) {
-      statusElement.textContent = "Please select files to upload.";
-      return;
-    }
-
-    if (!authToken) await getB2AuthToken();
-
-    try {
-      for (let file of files) {
-        const uploadUrlResponse = await fetch(`${apiUrlAuth}/b2api/v2/b2_get_upload_url`, {
-          method: "POST",
-          headers: { "Authorization": authToken },
-          body: JSON.stringify({ bucketId })
-        });
-        const uploadUrlData = await uploadUrlResponse.json();
-        const uploadUrl = uploadUrlData.uploadUrl;
-        const uploadAuthToken = uploadUrlData.authorizationToken;
-
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("fileName", file.name);
-
-        await fetch(uploadUrl, {
-          method: "POST",
-          headers: { "Authorization": uploadAuthToken },
-          body: formData
-        });
-      }
-      statusElement.textContent = "Files uploaded successfully!";
-    } catch (error) {
-      statusElement.textContent = "An error occurred during upload.";
-      console.error(error);
-    }
+  if (files.length === 0) {
+    statusElement.textContent = "Please select files to upload.";
+    return;
   }
+
+  if (!authToken) await getB2AuthToken();
+
+  try {
+    for (let file of files) {
+      // Получение uploadUrl
+      const uploadUrlResponse = await fetch(`${apiUrlAuth}/b2api/v2/b2_get_upload_url`, {
+        method: "POST",
+        headers: {
+          "Authorization": authToken,
+        },
+        body: JSON.stringify({ bucketId }),
+      });
+
+      if (!uploadUrlResponse.ok) {
+        throw new Error(`Failed to get upload URL: ${uploadUrlResponse.statusText}`);
+      }
+
+      const uploadUrlData = await uploadUrlResponse.json();
+      const uploadUrl = uploadUrlData.uploadUrl;
+      const uploadAuthToken = uploadUrlData.authorizationToken;
+
+      // Подготовка файла к загрузке
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileName", file.name);
+
+      // Загрузка файла
+      const uploadResponse = await fetch(uploadUrl, {
+        method: "POST",
+        headers: { "Authorization": uploadAuthToken },
+        body: formData,
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Failed to upload file: ${uploadResponse.statusText}`);
+      }
+
+      const uploadData = await uploadResponse.json();
+      console.log("Upload successful:", uploadData);
+
+      // Отображение результата
+      statusElement.textContent = `File "${file.name}" uploaded successfully!`;
+    }
+  } catch (error) {
+    statusElement.textContent = `Error: ${error.message}`;
+    console.error(error);
+  }
+}
 </script>
 
 </body>
