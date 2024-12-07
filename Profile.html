@@ -6,7 +6,7 @@
   <title>My Profile - Maangoff</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
+<style>
     body {
       font-family: 'Poppins', sans-serif;
       margin: 0;
@@ -161,21 +161,25 @@
 
     // Получаем данные пользователей с B2
     async function loadUsers() {
-      const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
-        },
-        body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
-      });
-      const data = await response.json();
-      const usersFile = data.files.find(file => file.fileName === "users.json");
-      
-      if (usersFile) {
-        const fileResponse = await fetch(`https://api.backblazeb2.com/file/${"930b5c5ce1d59e3391310b1e>"}${usersFile.fileName}`, {
-          headers: { Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I" },
+      try {
+        const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
+          },
+          body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
         });
-        usersData = await fileResponse.json();
+        const data = await response.json();
+        const usersFile = data.files.find(file => file.fileName === "users.json");
+        
+        if (usersFile) {
+          const fileResponse = await fetch(`https://api.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
+            headers: { Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I" },
+          });
+          usersData = await fileResponse.json();
+        }
+      } catch (error) {
+        console.error("Error loading users data:", error);
       }
     }
 
@@ -213,16 +217,6 @@
     }
 
     // Сохранение данных профиля
-    async function saveProfile() {
-      const updatedProfile = {
-        name: document.getElementById("nameInput").value,
-        email: document.getElementById("emailInput").value,
-        bio: document.getElementById("bioInput").value,
-      };
-
-      // Сохранить обновленные данные в B2
-      // Здесь можно использовать API для загрузки обновленных данных обратно на B2
-
       // Показываем сообщение об успешном сохранении
       document.getElementById("successMessage").style.display = "block";
       setTimeout(() => {
