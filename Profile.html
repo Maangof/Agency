@@ -169,6 +169,7 @@
   <script>
 let isLoggedIn = false;
 let usersData = [];
+let currentUser = null;
 
 // Получение данных пользователей
 async function loadUsers() {
@@ -200,12 +201,16 @@ async function login() {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
 
-  await loadUsers();
+  if (!usersData.length) {
+    await loadUsers(); // Загружаем данные пользователей только если они отсутствуют
+  }
 
   const user = usersData.find(u => u.username === username && u.password === password);
 
   if (user) {
     isLoggedIn = true;
+    currentUser = user;
+    saveSession(); // Сохраняем сессию в localStorage
     toggleView();
     loadProfile(user);
   } else {
@@ -213,37 +218,76 @@ async function login() {
   }
 }
 
-// Регистрация нового пользователя
-async function register() {
-  const username = document.getElementById("newUsername").value;
-  const password = document.getElementById("newPassword").value;
-  const email = document.getElementById("newEmail").value;
-  const name = document.getElementById("newName").value;
+// Сохранение состояния в localStorage
+function saveSession() {
+  localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+}
 
-  await loadUsers();
+// Восстановление состояния из localStorage
+async function restoreSession() {
+  const savedLoginState = localStorage.getItem("isLoggedIn");
+  const savedUser = localStorage.getItem("currentUser");
 
-  // Проверяем, существует ли пользователь
-  const existingUser = usersData.find(u => u.username === username);
-  if (existingUser) {
-    alert("User already exists!");
-    return;
+  if (savedLoginState === "true" && savedUser) {
+    isLoggedIn = true;
+    currentUser = JSON.parse(savedUser);
+    await loadUsers(); // Загружаем данные пользователей при восстановлении
+    toggleView();
+    loadProfile(currentUser);
   }
+}
 
-  // Добавляем нового пользователя
-  const newUser = {
-    username,
-    password,
-    name,
-    email,
-    bio: "New user bio",
-  };
-  usersData.push(newUser);
+// Выход из профиля
+function logout() {
+  isLoggedIn = false;
+  currentUser = null;
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("currentUser");
+  toggleView();
+}
 
-  // Сохраняем обновлённые данные на B2
-  await saveUsersToB2(usersData);
+// Переключение вида между авторизацией и профилем
+function toggleView() {
+  document.getElementById("loginForm").classList.toggle("active", !isLoggedIn);
+  document.getElementById("profileContent").classList.toggle("active", isLoggedIn);
+}
 
-  alert("Registration successful! Please login.");
-  toggleAuthForms("login");
+// Загрузка профиля
+function loadProfile(user) {
+  document.getElementById("profileName").textContent = user.name;
+  document.getElementById("profileBio").textContent = user.bio;
+  document.getElementById("nameInput").value = user.name;
+  document.getElementById("emailInput").value = user.email;
+  document.getElementById("bioInput").value = user.bio;
+}
+
+// Сохранение данных профиля
+function saveProfile() {
+  const updatedName = document.getElementById("nameInput").value;
+  const updatedEmail = document.getElementById("emailInput").value;
+  const updatedBio = document.getElementById("bioInput").value;
+
+  const userIndex = usersData.findIndex(u => u.username === currentUser.username);
+
+  if (userIndex !== -1) {
+    usersData[userIndex].name = updatedName;
+    usersData[userIndex].email = updatedEmail;
+    usersData[userIndex].bio = updatedBio;
+    currentUser = usersData[userIndex];
+
+    saveUsersToB2(usersData);
+    saveSession(); // Обновляем данные в localStorage
+
+    document.getElementById("profileName").textContent = updatedName;
+    document.getElementById("profileBio").textContent = updatedBio;
+
+    // Показываем сообщение об успешном сохранении
+    document.getElementById("successMessage").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("successMessage").style.display = "none";
+    }, 2000);
+  }
 }
 
 // Сохранение данных пользователей в B2
@@ -268,57 +312,11 @@ async function saveUsersToB2(updatedData) {
   }
 }
 
-// Переключение между формой авторизации и регистрации
-function toggleAuthForms(form) {
-  document.getElementById("loginForm").style.display = form === "login" ? "block" : "none";
-  document.getElementById("registerForm").style.display = form === "register" ? "block" : "none";
-}
-
-// Переключение вида между авторизацией и профилем
-function toggleView() {
-  document.getElementById("loginForm").classList.toggle("active", !isLoggedIn);
-  document.getElementById("profileContent").classList.toggle("active", isLoggedIn);
-}
-
-// Загрузка профиля
-function loadProfile(user) {
-  document.getElementById("profileName").textContent = user.name;
-  document.getElementById("profileBio").textContent = user.bio;
-  document.getElementById("nameInput").value = user.name;
-  document.getElementById("emailInput").value = user.email;
-  document.getElementById("bioInput").value = user.bio;
-}
-
-// Сохранение данных профиля
-function saveProfile() {
-  const updatedName = document.getElementById("nameInput").value;
-  const updatedEmail = document.getElementById("emailInput").value;
-  const updatedBio = document.getElementById("bioInput").value;
-
-  const currentUser = usersData.find(user => user.name === document.getElementById("profileName").textContent);
-
-  if (currentUser) {
-    currentUser.name = updatedName;
-    currentUser.email = updatedEmail;
-    currentUser.bio = updatedBio;
-
-    saveUsersToB2(usersData);
-
-    document.getElementById("profileName").textContent = updatedName;
-    document.getElementById("profileBio").textContent = updatedBio;
-
-    // Показываем сообщение об успешном сохранении
-    document.getElementById("successMessage").style.display = "block";
-    setTimeout(() => {
-      document.getElementById("successMessage").style.display = "none";
-    }, 2000);
-  }
-}
-
 // Инициализация страницы
 window.onload = function () {
-  toggleAuthForms("login");
+  restoreSession(); // Восстанавливаем состояние при загрузке страницы
 };
+    
 </script>
 
 </body>
