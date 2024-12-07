@@ -165,7 +165,7 @@
       const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
         method: "POST",
         headers: {
-          Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
+          Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI"
         },
         body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
       });
@@ -174,7 +174,7 @@
       
       if (usersFile) {
         const fileResponse = await fetch(`https://api.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
-          headers: { Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I" },
+          headers: { Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI" },
         });
         usersData = await fileResponse.json();
       }
