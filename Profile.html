@@ -156,78 +156,131 @@
   </div>
 
   <script>
-    let isLoggedIn = false;
-    let usersData = [];
+  let isLoggedIn = false;
+  let usersData = [];
 
-    // Получаем данные пользователей с B2
-    async function loadUsers() {
-      try {
-        const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
+  // Получаем данные пользователей с B2
+  async function loadUsers() {
+    try {
+      const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
+        },
+        body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
+      });
+      const data = await response.json();
+      const usersFile = data.files.find(file => file.fileName === "users.json");
+      
+      if (usersFile) {
+        const fileResponse = await fetch(`https://api.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
+          headers: { Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I" },
+        });
+        usersData = await fileResponse.json();
+      }
+    } catch (error) {
+      console.error("Error loading users data:", error);
+    }
+  }
+
+  // Авторизация пользователя
+  async function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    await loadUsers(); // Загрузка данных пользователей с B2
+
+    const user = usersData.find(u => u.username === username && u.password === password);
+
+    if (user) {
+      isLoggedIn = true;
+      toggleView();
+      loadProfile(user); // Загрузка данных пользователя в личный кабинет
+    } else {
+      alert("Invalid login credentials!");
+    }
+  }
+
+  // Переключение между формой авторизации и профилем
+  function toggleView() {
+    document.getElementById("loginForm").classList.toggle("active", !isLoggedIn);
+    document.getElementById("profileContent").classList.toggle("active", isLoggedIn);
+  }
+
+  // Загрузка профиля
+  function loadProfile(user) {
+    document.getElementById("profileName").textContent = user.name;
+    document.getElementById("profileBio").textContent = user.bio;
+    document.getElementById("nameInput").value = user.name;
+    document.getElementById("emailInput").value = user.email;
+    document.getElementById("bioInput").value = user.bio;
+  }
+
+  // Сохранение данных профиля
+  async function saveProfile() {
+    const updatedProfile = {
+      username: document.getElementById("username").value,
+      name: document.getElementById("nameInput").value,
+      email: document.getElementById("emailInput").value,
+      bio: document.getElementById("bioInput").value,
+    };
+
+    // Обновляем данные в usersData
+    const currentUser = usersData.find(u => u.username === updatedProfile.username);
+    if (currentUser) {
+      currentUser.name = updatedProfile.name;
+      currentUser.email = updatedProfile.email;
+      currentUser.bio = updatedProfile.bio;
+    }
+
+    // Преобразуем обновленные данные в JSON
+    const updatedFileContent = JSON.stringify(usersData);
+
+    try {
+      // Получаем uploadUrl для загрузки файла
+      const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_get_upload_url", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
+        },
+        body: JSON.stringify({
+          bucketId: "930b5c5ce1d59e3391310b1e"
+        })
+      });
+      const data = await response.json();
+
+      if (data.uploadUrl) {
+        // Загружаем обновленные данные в B2
+        const uploadResponse = await fetch(data.uploadUrl, {
           method: "POST",
           headers: {
-            Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I"
+            "Authorization": "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I",
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
+          body: updatedFileContent
         });
-        const data = await response.json();
-        const usersFile = data.files.find(file => file.fileName === "users.json");
-        
-        if (usersFile) {
-          const fileResponse = await fetch(`https://api.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
-            headers: { Authorization: "Bearer K003Qhz5ApUUpmIDLZ8wndQWFGfaT+I" },
-          });
-          usersData = await fileResponse.json();
+
+        const uploadResult = await uploadResponse.json();
+        if (uploadResult.status === "success") {
+          // Показать сообщение об успешном сохранении
+          document.getElementById("successMessage").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("successMessage").style.display = "none";
+          }, 2000);
+        } else {
+          console.error("Failed to upload the file:", uploadResult);
         }
-      } catch (error) {
-        console.error("Error loading users data:", error);
       }
+    } catch (error) {
+      console.error("Error saving profile:", error);
     }
+  }
 
-    // Авторизация пользователя
-    async function login() {
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+  // Инициализация страницы
+  window.onload = function() {
+    toggleView();
+  };
+</script>
 
-      await loadUsers(); // Загрузка данных пользователей с B2
-
-      const user = usersData.find(u => u.username === username && u.password === password);
-
-      if (user) {
-        isLoggedIn = true;
-        toggleView();
-        loadProfile(user); // Загрузка данных пользователя в личный кабинет
-      } else {
-        alert("Invalid login credentials!");
-      }
-    }
-
-    // Переключение между формой авторизации и профилем
-    function toggleView() {
-      document.getElementById("loginForm").classList.toggle("active", !isLoggedIn);
-      document.getElementById("profileContent").classList.toggle("active", isLoggedIn);
-    }
-
-    // Загрузка профиля
-    function loadProfile(user) {
-      document.getElementById("profileName").textContent = user.name;
-      document.getElementById("profileBio").textContent = user.bio;
-      document.getElementById("nameInput").value = user.name;
-      document.getElementById("emailInput").value = user.email;
-      document.getElementById("bioInput").value = user.bio;
-    }
-
-    // Сохранение данных профиля
-      // Показываем сообщение об успешном сохранении
-      document.getElementById("successMessage").style.display = "block";
-      setTimeout(() => {
-        document.getElementById("successMessage").style.display = "none";
-      }, 2000);
-    }
-
-    // Инициализация страницы
-    window.onload = function() {
-      toggleView();
-    };
-  </script>
 </body>
 </html>
