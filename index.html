@@ -1,188 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to My Account</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f7fa;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: #007bff;
-      color: white;
-    }
-    header h1 {
-      font-size: 2.5em;
-      font-weight: 600;
-    }
-    .button-container {
-      display: flex;
-      justify-content: center;
-      margin-top: 50px;
-    }
-    .cta-button {
-      padding: 15px 30px;
-      background: #007bff;
-      color: white;
-      border: none;
-      font-size: 1.2em;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .cta-button:hover {
-      background: #0056b3;
-    }
-    .auth-form-container {
-      display: none;
-      text-align: center;
-    }
-    .auth-form-container.active {
-      display: block;
-    }
-    .login-form input,
-    .register-form input {
-      margin: 10px 0;
-      padding: 10px;
-      width: 80%;
-      font-size: 1em;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-    .login-form button,
-    .register-form button {
-      background: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      font-size: 1em;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .login-form button:hover,
-    .register-form button:hover {
-      background: #0056b3;
-    }
-    .auth-form-container a {
-      color: #007bff;
-      text-decoration: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Maangoff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f5f7fa, #e4e9f0);
+            color: #333;
+        }
+        header {
+            text-align: center;
+            padding: 50px;
+            background-color: #4f6d7a; /* Matching header background */
+            color: white;
+        }
+        header h1 {
+            font-size: 3em;
+            font-weight: 600;
+        }
+        .btn {
+            background-color: #007bff;
+            padding: 15px 25px;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Add your custom styles for login form here */
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Welcome to My Profile</h1>
+        <button class="btn" onclick="toggleAuthForms('login')">My Account</button>
+    </header>
 
-  <header>
-    <h1>Welcome to My Account</h1>
-  </header>
+    <div class="container">
+        <div id="loginForm" class="auth-form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button class="btn" onclick="login()">Login</button>
+            <p>Don't have an account? <a href="#" onclick="toggleAuthForms('register')">Sign up</a></p>
+        </div>
 
-  <div class="button-container">
-    <button class="cta-button" onclick="showAuthForm()">My Account</button>
-  </div>
-
-  <!-- Login / Register Form -->
-  <div class="auth-form-container" id="authForm">
-    <!-- Login Form -->
-    <div class="login-form active" id="loginForm">
-      <h2>Login</h2>
-      <input type="text" id="loginUsername" placeholder="Username">
-      <input type="password" id="loginPassword" placeholder="Password">
-      <button onclick="login()">Login</button>
-      <p>New user? <a href="#" onclick="toggleForms('register')">Sign Up</a></p>
+        <div id="registerForm" class="auth-form" style="display:none;">
+            <h2>Register</h2>
+            <input type="text" id="newUsername" placeholder="Username" />
+            <input type="password" id="newPassword" placeholder="Password" />
+            <input type="email" id="newEmail" placeholder="Email" />
+            <button class="btn" onclick="register()">Register</button>
+            <p>Already have an account? <a href="#" onclick="toggleAuthForms('login')">Login</a></p>
+        </div>
     </div>
 
-    <!-- Register Form -->
-    <div class="register-form" id="registerForm">
-      <h2>Register</h2>
-      <input type="text" id="registerUsername" placeholder="Username">
-      <input type="password" id="registerPassword" placeholder="Password">
-      <input type="email" id="registerEmail" placeholder="Email">
-      <input type="text" id="registerName" placeholder="Full Name">
-      <button onclick="register()">Register</button>
-      <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
-    </div>
-  </div>
+    <script>
+        let usersData = [];
+        
+        // Function to load user data from Backblaze
+        async function loadUsers() {
+            try {
+                const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI",
+                    },
+                    body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
+                });
 
-  <script>
-    const B2_API_KEY = 'your_b2_api_key';
-    const B2_ACCOUNT_ID = 'your_b2_account_id';
-    const B2_BUCKET_NAME = 'your_b2_bucket_name';
-    const USERS_FILE = 'users.json';
-    let users = [];
-    let loggedInUser = null;
+                const data = await response.json();
+                const usersFile = data.files.find(file => file.fileName === "users.json");
 
-    async function fetchUsers() {
-      const url = `https://api.backblaze.com/b2api/v2/b2_download_file_by_name`;
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${B2_API_KEY}`,
-        },
-        body: JSON.stringify({
-          fileName: USERS_FILE,
-          bucketName: B2_BUCKET_NAME
-        }),
-      });
-      const data = await response.json();
-      users = JSON.parse(data.fileContent);
-    }
+                if (usersFile) {
+                    const fileResponse = await fetch(`https://f930b5c5ce1d59e3391310b1e.file.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
+                        headers: { Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI" },
+                    });
+                    usersData = await fileResponse.json();
+                }
+            } catch (error) {
+                console.error("Error loading users data:", error);
+            }
+        }
 
-    // Переключение между формами авторизации и регистрации
-    function toggleForms(form) {
-      if (form === 'login') {
-        document.getElementById('loginForm').classList.add('active');
-        document.getElementById('registerForm').classList.remove('active');
-      } else {
-        document.getElementById('registerForm').classList.add('active');
-        document.getElementById('loginForm').classList.remove('active');
-      }
-    }
+        // Login function
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    // Показ формы для авторизации/регистрации
-    function showAuthForm() {
-      fetchUsers().then(() => {
-        document.getElementById('authForm').classList.add('active');
-      });
-    }
+            if (!usersData.length) {
+                await loadUsers();
+            }
 
-    // Функция для регистрации
-    function register() {
-      const username = document.getElementById('registerUsername').value;
-      const password = document.getElementById('registerPassword').value;
-      const email = document.getElementById('registerEmail').value;
-      const name = document.getElementById('registerName').value;
+            const user = usersData.find(u => u.username === username && u.password === password);
+            if (user) {
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                window.location.href = "Profile.html";
+            } else {
+                alert("Invalid login credentials!");
+            }
+        }
 
-      // Добавление нового пользователя в список
-      users.push({ username, password, email, name });
-      localStorage.setItem('users', JSON.stringify(users));
+        // Toggle between login and register forms
+        function toggleAuthForms(formType) {
+            const loginForm = document.getElementById("loginForm");
+            const registerForm = document.getElementById("registerForm");
 
-      alert('Registration successful! Please login.');
-      toggleForms('login');
-    }
+            if (formType === 'login') {
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+            } else {
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+            }
+        }
 
-    // Функция для входа
-    function login() {
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
-
-      const user = users.find(u => u.username === username && u.password === password);
-
-      if (user) {
-        loggedInUser = user;
-        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-        window.location.href = 'Profile.html';
-      } else {
-        alert('Invalid credentials');
-      }
-    }
-  </script>
-
+        // Register function (just an example for now)
+        function register() {
+            // Registration logic (similar to login)
+        }
+    </script>
 </body>
 </html>
