@@ -3,122 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maangoff Modeling Agency</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+  <title>Welcome to My Account</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       margin: 0;
       padding: 0;
+      background: #f5f7fa;
       color: #333;
-      background-color: #fff;
     }
     header {
-      background-color: #fff;
       text-align: center;
-      padding: 80px 0;
+      padding: 20px;
+      background: #007bff;
+      color: white;
     }
-    .logo-container {
-      font-family: 'Playfair Display', serif;
+    header h1 {
+      font-size: 2.5em;
+      font-weight: 600;
     }
-    h1 {
-      font-size: 4em;
-      color: #f4d03f;
-      margin: 0;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
     }
-    .slogan {
-      font-family: 'Cormorant Garamond', serif;
+    .cta-button {
+      padding: 15px 30px;
+      background: #007bff;
+      color: white;
+      border: none;
       font-size: 1.2em;
-      color: #333;
-      letter-spacing: 1px;
-      margin-top: 10px;
-    }
-    nav {
-      text-align: center;
-      padding: 20px 0;
-    }
-    .nav-button {
-      font-size: 1.2em;
-      text-decoration: none;
-      color: #fff;
-      background-color: #007BFF;
-      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
+    }
+    .cta-button:hover {
+      background: #0056b3;
+    }
+    .auth-form-container {
+      display: none;
       text-align: center;
-      display: inline-block;
     }
-    .nav-button:hover {
-      background-color: #0056b3;
+    .auth-form-container.active {
+      display: block;
     }
-    .hero {
-      background: url('https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/face-1511873_1920.jpg') no-repeat center center/cover;
-      height: 400px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .login-form input,
+    .register-form input {
+      margin: 10px 0;
+      padding: 10px;
+      width: 80%;
+      font-size: 1em;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .login-form button,
+    .register-form button {
+      background: #007bff;
       color: white;
-      text-align: center;
+      padding: 10px 20px;
+      border: none;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .hero h2 {
-      font-size: 3em;
-      margin: 0;
+    .login-form button:hover,
+    .register-form button:hover {
+      background: #0056b3;
     }
-    .photo-gallery {
-      display: flex;
-      overflow-x: auto;
-      padding: 20px;
-      gap: 10px;
-    }
-    .photo-gallery img {
-      height: 100px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-    }
-    footer p {
-      margin: 0;
+    .auth-form-container a {
+      color: #007bff;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-container">
-    <h1>Maangoff</h1>
-    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
+  <header>
+    <h1>Welcome to My Account</h1>
+  </header>
+
+  <div class="button-container">
+    <button class="cta-button" onclick="showAuthForm()">My Account</button>
   </div>
-</header>
 
-<nav>
-  <a href="Profile.html" class="nav-button">My Account</a>
-</nav>
+  <!-- Login / Register Form -->
+  <div class="auth-form-container" id="authForm">
+    <!-- Login Form -->
+    <div class="login-form active" id="loginForm">
+      <h2>Login</h2>
+      <input type="text" id="loginUsername" placeholder="Username">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button onclick="login()">Login</button>
+      <p>New user? <a href="#" onclick="toggleForms('register')">Sign Up</a></p>
+    </div>
 
-<div class="hero">
-  <h2 class="discover-beauty">Discover Beauty</h2>
-</div>
-
-<section id="gallery">
-  <div class="photo-gallery">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-2350565_1920.jpg" alt="Model 1">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-4684702_1920.jpg" alt="Model 2">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-2593366_1920.jpg" alt="Model 3">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/portrait-5601950_1920.jpg" alt="Model 4">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/eris-6672934.jpg" alt="Model 5">
+    <!-- Register Form -->
+    <div class="register-form" id="registerForm">
+      <h2>Register</h2>
+      <input type="text" id="registerUsername" placeholder="Username">
+      <input type="password" id="registerPassword" placeholder="Password">
+      <input type="email" id="registerEmail" placeholder="Email">
+      <input type="text" id="registerName" placeholder="Full Name">
+      <button onclick="register()">Register</button>
+      <p>Already have an account? <a href="#" onclick="toggleForms('login')">Login</a></p>
+    </div>
   </div>
-</section>
 
-<footer>
-  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
-</footer>
+  <script>
+    const B2_API_KEY = 'your_b2_api_key';
+    const B2_ACCOUNT_ID = 'your_b2_account_id';
+    const B2_BUCKET_NAME = 'your_b2_bucket_name';
+    const USERS_FILE = 'users.json';
+    let users = [];
+    let loggedInUser = null;
+
+    async function fetchUsers() {
+      const url = `https://api.backblaze.com/b2api/v2/b2_download_file_by_name`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${B2_API_KEY}`,
+        },
+        body: JSON.stringify({
+          fileName: USERS_FILE,
+          bucketName: B2_BUCKET_NAME
+        }),
+      });
+      const data = await response.json();
+      users = JSON.parse(data.fileContent);
+    }
+
+    // Переключение между формами авторизации и регистрации
+    function toggleForms(form) {
+      if (form === 'login') {
+        document.getElementById('loginForm').classList.add('active');
+        document.getElementById('registerForm').classList.remove('active');
+      } else {
+        document.getElementById('registerForm').classList.add('active');
+        document.getElementById('loginForm').classList.remove('active');
+      }
+    }
+
+    // Показ формы для авторизации/регистрации
+    function showAuthForm() {
+      fetchUsers().then(() => {
+        document.getElementById('authForm').classList.add('active');
+      });
+    }
+
+    // Функция для регистрации
+    function register() {
+      const username = document.getElementById('registerUsername').value;
+      const password = document.getElementById('registerPassword').value;
+      const email = document.getElementById('registerEmail').value;
+      const name = document.getElementById('registerName').value;
+
+      // Добавление нового пользователя в список
+      users.push({ username, password, email, name });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      alert('Registration successful! Please login.');
+      toggleForms('login');
+    }
+
+    // Функция для входа
+    function login() {
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        loggedInUser = user;
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+        window.location.href = 'Profile.html';
+      } else {
+        alert('Invalid credentials');
+      }
+    }
+  </script>
 
 </body>
 </html>
