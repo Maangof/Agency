@@ -3,66 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maangoff Modeling Agency - Profile</title>
+  <title>My Profile - Maangoff Modeling Agency</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fff;
+      margin: 0;
+      padding: 0;
       color: #333;
+      background-color: #fff;
+    }
+    header {
+      background-color: #fff;
+      text-align: center;
+      padding: 80px 0;
+    }
+    .logo-container {
+      font-family: 'Playfair Display', serif;
+    }
+    h1 {
+      font-size: 4em;
+      color: #f4d03f;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2em;
+      color: #333;
+      letter-spacing: 1px;
+      margin-top: 10px;
     }
     .profile-container {
-      max-width: 600px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .profile-container h2 {
+      padding: 40px;
       text-align: center;
-      color: #333;
     }
-    .profile-container p {
+    .profile-details {
       font-size: 1.2em;
+      margin-top: 20px;
     }
-    .btn-logout {
-      background-color: #f44336;
-      color: white;
+    .profile-details p {
+      margin: 10px 0;
+    }
+    .edit-button, .logout-button {
       padding: 10px 20px;
-      border-radius: 5px;
+      background-color: #f4d03f;
+      border: none;
+      color: white;
+      font-size: 1em;
       cursor: pointer;
-      display: block;
-      width: 100%;
+      margin-top: 20px;
     }
-    .btn-logout:hover {
-      background-color: #d32f2f;
+    .edit-button:hover, .logout-button:hover {
+      background-color: #e1c12d;
+    }
+    .file-upload input[type="file"] {
+      padding: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="profile-container">
-    <h2>Welcome, <span id="username"></span>!</h2>
-    <p>Email: <span id="email"></span></p>
-    <button class="btn-logout" id="logoutBtn">Logout</button>
+<header>
+  <div class="logo-container">
+    <h1>Maangoff</h1>
+    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
+  </div>
+</header>
+
+<div class="profile-container">
+  <h2>Welcome to Your Profile</h2>
+  <div class="profile-details">
+    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+    <button class="edit-button" onclick="editProfile()">Edit Profile</button>
+    <button class="logout-button" onclick="logout()">Logout</button>
   </div>
 
-  <script>
-    // Проверка на авторизацию
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    if (!user) {
-      window.location.href = 'index.html';  // Перенаправление, если пользователь не авторизован
+  <!-- File upload section -->
+  <div class="file-upload">
+    <input type="file" id="fileUpload" accept="image/*" />
+    <button onclick="uploadFile()">Upload File</button>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+</footer>
+
+<script>
+// Firebase Authentication
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+// Backblaze B2 SDK for file upload (replace with your own API)
+const BACKBLAZE_API_KEY = "your_b2_api_key";
+const BACKBLAZE_BUCKET_ID = "your_bucket_id";
+const BACKBLAZE_API_URL = "https://api.backblazeb2.com/b2api/v2";
+
+const auth = getAuth();
+const db = getFirestore();
+
+const user = auth.currentUser;
+
+if (user) {
+  document.getElementById('userName').textContent = user.displayName || "N/A";
+  document.getElementById('userEmail').textContent = user.email || "N/A";
+
+  const userDocRef = doc(db, "users", user.uid);
+  getDoc(userDocRef).then((docSnap) => {
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      document.getElementById('userName').textContent = userData.name || user.displayName || "N/A";
+      document.getElementById('userEmail').textContent = userData.email || user.email || "N/A";
     }
+  });
+} else {
+  window.location.href = '/';
+}
 
-    document.getElementById('username').textContent = user.username;
-    document.getElementById('email').textContent = user.email || 'No email provided';
+function logout() {
+  signOut(auth).then(() => {
+    window.location.href = '/';
+  }).catch((error) => {
+    console.error('Logout error: ', error);
+  });
+}
 
-    // Обработчик выхода
-    document.getElementById('logoutBtn').addEventListener('click', function() {
-      sessionStorage.removeItem('user');
-      window.location.href = 'index.html';
+function editProfile() {
+  // Add functionality to open a modal or form to edit user profile details
+  alert("Edit Profile functionality can be added here.");
+}
+
+function uploadFile() {
+  const file = document.getElementById('fileUpload').files[0];
+  if (file) {
+    // First, get an upload URL from Backblaze B2 (you may need to get this from your API)
+    fetch("https://api.backblazeb2.com/b2api/v2/b2_upload_file", {
+      method: "POST",
+      headers: {
+        "Authorization": `Basic K003hkyUDVCOI95vyyc9DJsprMuY1mI`,
+      },
+      body: JSON.stringify({
+        bucketId: "930b5c5ce1d59e3391310b1e"
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      const uploadUrl = data.uploadUrl;
+      const uploadAuthToken = data.authorizationToken;
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      fetch(uploadUrl, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI`
+        },
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert("File uploaded successfully!");
+      })
+      .catch(error => {
+        console.error("File upload failed:", error);
+      });
+    })
+    .catch(error => {
+      console.error("Failed to get upload URL:", error);
     });
-  </script>
+  } else {
+    alert('Please select a file to upload.');
+  }
+}
+</script>
+
 </body>
 </html>
