@@ -36,22 +36,31 @@
       letter-spacing: 1px;
       margin-top: 10px;
     }
-    nav {
-      text-align: center;
-      padding: 20px 0;
+    .auth-container {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
     }
-    .nav-button {
-      font-size: 1.2em;
-      text-decoration: none;
-      color: #fff;
+    .auth-container input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .auth-container button {
+      width: 100%;
+      padding: 10px;
       background-color: #007BFF;
-      padding: 10px 20px;
-      border-radius: 5px;
+      color: white;
+      border: none;
+      border-radius: 4px;
       cursor: pointer;
-      text-align: center;
-      display: inline-block;
     }
-    .nav-button:hover {
+    .auth-container button:hover {
       background-color: #0056b3;
     }
     .hero {
@@ -66,17 +75,6 @@
     .hero h2 {
       font-size: 3em;
       margin: 0;
-    }
-    .photo-gallery {
-      display: flex;
-      overflow-x: auto;
-      padding: 20px;
-      gap: 10px;
-    }
-    .photo-gallery img {
-      height: 100px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     footer {
       background: #333;
@@ -98,27 +96,51 @@
   </div>
 </header>
 
-<nav>
-  <a href="Profile.html" class="nav-button">My Account</a>
-</nav>
-
 <div class="hero">
   <h2 class="discover-beauty">Discover Beauty</h2>
 </div>
 
-<section id="gallery">
-  <div class="photo-gallery">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-2350565_1920.jpg" alt="Model 1">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-4684702_1920.jpg" alt="Model 2">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/woman-2593366_1920.jpg" alt="Model 3">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/portrait-5601950_1920.jpg" alt="Model 4">
-    <img src="https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/eris-6672934.jpg" alt="Model 5">
-  </div>
-</section>
+<div class="auth-container">
+  <h3>Login / Sign Up</h3>
+  <form id="authForm">
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+</div>
 
 <footer>
   <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
 </footer>
+
+<script>
+  const form = document.getElementById('authForm');
+  form.addEventListener('submit', async function(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Взаимодействие с B2 bucket (фейковая проверка для примера)
+    try {
+      const response = await fetch('https://www.backblaze.com/b2api/v2/buckets/your-bucket-id/files', {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer your-api-key',
+        },
+      });
+      const data = await response.json();
+      const user = data.files.find(file => file.name === `${username}.json`);
+      if (user && user.password === password) {
+        window.location.href = 'Profile.html';
+      } else {
+        alert('Invalid credentials!');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error logging in');
+    }
+  });
+</script>
 
 </body>
 </html>
