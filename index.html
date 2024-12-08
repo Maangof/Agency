@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maangoff Modeling Agency - Login</title>
+  <title>Login / Register</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
   <style>
-    /* CSS стиль для страницы */
     body {
       font-family: Arial, sans-serif;
       background-color: #fff;
       color: #333;
     }
-    .login-container {
+    .container {
       max-width: 400px;
       margin: 50px auto;
       padding: 20px;
@@ -20,7 +19,7 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
-    .login-container h2 {
+    h2 {
       text-align: center;
       color: #333;
     }
@@ -49,53 +48,81 @@
   </style>
 </head>
 <body>
-
-  <div class="login-container">
-    <h2>Login / Register</h2>
+  <div class="container">
+    <h2>Login</h2>
     <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
+      <input type="text" id="username" placeholder="Username" required autocomplete="username">
+      <input type="password" id="password" placeholder="Password" required autocomplete="current-password">
       <button type="submit" class="btn">Login</button>
       <p class="error" id="error-message"></p>
+    </form>
+    <hr>
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" id="newUsername" placeholder="Enter new username" required autocomplete="username">
+      <input type="password" id="newPassword" placeholder="Enter new password" required autocomplete="new-password">
+      <button type="submit" class="btn">Register</button>
     </form>
   </div>
 
   <script>
-  document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    // URL для работы с B2 bucket
+    const B2_USERS_URL = 'https://maangoff.s3.eu-central-003.backblazeb2.com/users.json';
 
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-
-    if (!username || !password) {
-      alert('Please enter both username and password.');
-      return;
+    // Функция загрузки данных из JSON
+    async function fetchUsers() {
+      const response = await fetch(B2_USERS_URL);
+      if (!response.ok) throw new Error('Failed to load users.json');
+      return await response.json();
     }
 
-    fetch('https://maangoff.s3.eu-central-003.backblazeb2.com/users.json')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to load users.json');
-        }
-        return response.json();
-      })
-      .then(users => {
-        const user = users.find(user => user.username === username && user.password === password);
+    // Логика авторизации
+    document.getElementById('loginForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const users = await fetchUsers();
+        const user = users.find(u => u.username === username && u.password === password);
 
         if (user) {
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', username);
-          window.location.href = 'Profile.html';
+          window.location.href = 'profile.html';
         } else {
-          alert('Invalid username or password.');
+          document.getElementById('error-message').textContent = 'Invalid username or password';
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error:', error);
         alert('An error occurred. Please try again later.');
-      });
-  });
-</script>
+      }
+    });
 
+    // Логика регистрации
+    document.getElementById('registerForm').addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const newUsername = document.getElementById('newUsername').value;
+      const newPassword = document.getElementById('newPassword').value;
+
+      try {
+        const users = await fetchUsers();
+
+        if (users.some(u => u.username === newUsername)) {
+          alert('Username already exists.');
+          return;
+        }
+
+        users.push({ username: newUsername, password: newPassword });
+
+        alert('Registration successful! However, to save this data, use Backblaze B2 API manually.');
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+      }
+    });
+  </script>
 </body>
 </html>
