@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - Maangoff</title>
+    <title>My Profile - Maangoff</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -24,20 +24,6 @@
             font-size: 3em;
             font-weight: 600;
         }
-        .profile-container {
-            width: 80%;
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .profile-header img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-        }
         .btn {
             background-color: #007bff;
             padding: 15px 25px;
@@ -50,37 +36,157 @@
         .btn:hover {
             background-color: #0056b3;
         }
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .auth-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .auth-form button {
+            background-color: #007bff;
+            padding: 15px 25px;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .auth-form button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>My Profile</h1>
+        <h1>Welcome to My Profile</h1>
+        <button class="btn" onclick="toggleAuthForms('login')">My Account</button>
     </header>
 
-    <div class="profile-container">
-        <div class="profile-header">
-            <img src="https://via.placeholder.com/120" alt="Profile Picture" />
-            <h2 id="profileName">John Doe</h2>
-            <p id="profileBio">Bio will go here...</p>
+    <div class="container">
+        <div id="loginForm" class="auth-form">
+            <h2>Login</h2>
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button class="btn" onclick="login()">Login</button>
+            <p>Don't have an account? <a href="#" onclick="toggleAuthForms('register')">Sign up</a></p>
         </div>
-        <button class="btn" onclick="editProfile()">Edit Profile</button>
-        <button class="btn" onclick="window.location.href='gallery.html'">Gallery</button>
+
+        <div id="registerForm" class="auth-form" style="display:none;">
+            <h2>Register</h2>
+            <input type="text" id="newUsername" placeholder="Username" />
+            <input type="password" id="newPassword" placeholder="Password" />
+            <input type="email" id="newEmail" placeholder="Email" />
+            <button class="btn" onclick="register()">Register</button>
+            <p>Already have an account? <a href="#" onclick="toggleAuthForms('login')">Login</a></p>
+        </div>
     </div>
 
     <script>
-        // Check if the user is logged in
-        if (!localStorage.getItem("isLoggedIn")) {
-            window.location.href = "index.html";
+        let usersData = [];
+
+        // Function to load user data from Backblaze
+        async function loadUsers() {
+            try {
+                const response = await fetch("https://api.backblazeb2.com/b2api/v2/b2_list_file_names", {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI",
+                    },
+                    body: JSON.stringify({ bucketId: "930b5c5ce1d59e3391310b1e" }),
+                });
+
+                const data = await response.json();
+                const usersFile = data.files.find(file => file.fileName === "users.json");
+
+                if (usersFile) {
+                    const fileResponse = await fetch(`https://f930b5c5ce1d59e3391310b1e.file.backblazeb2.com/file/930b5c5ce1d59e3391310b1e/${usersFile.fileName}`, {
+                        headers: { Authorization: "Bearer K003hkyUDVCOI95vyyc9DJsprMuY1mI" },
+                    });
+                    usersData = await fileResponse.json();
+                }
+            } catch (error) {
+                console.error("Error loading users data:", error);
+            }
         }
 
-        // Load user profile data
-        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        document.getElementById("profileName").textContent = currentUser.name;
-        document.getElementById("profileBio").textContent = currentUser.bio;
+        // Login function
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-        // Function to handle profile editing (not fully implemented here)
-        function editProfile() {
-            // Logic for profile editing
+            if (!usersData.length) {
+                await loadUsers();
+            }
+
+            const user = usersData.find(u => u.username === username && u.password === password);
+            if (user) {
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                window.location.href = "profile.html";
+            } else {
+                alert("Invalid login credentials!");
+            }
+        }
+
+        // Register function
+        async function register() {
+            const newUsername = document.getElementById("newUsername").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const newEmail = document.getElementById("newEmail").value;
+
+            if (!newUsername || !newPassword || !newEmail) {
+                alert("Please fill all fields.");
+                return;
+            }
+
+            if (!usersData.length) {
+                await loadUsers();
+            }
+
+            // Check if the username already exists
+            const existingUser = usersData.find(u => u.username === newUsername);
+            if (existingUser) {
+                alert("Username already exists!");
+                return;
+            }
+
+            // Add new user to the usersData
+            const newUser = {
+                username: newUsername,
+                password: newPassword,
+                email: newEmail,
+            };
+            usersData.push(newUser);
+
+            // Here you can send updated usersData back to the B2 bucket (using appropriate API)
+            // For now, this is just adding it to the local variable.
+
+            alert("Registration successful!");
+            toggleAuthForms('login');
+        }
+
+        // Toggle between login and register forms
+        function toggleAuthForms(formType) {
+            const loginForm = document.getElementById("loginForm");
+            const registerForm = document.getElementById("registerForm");
+
+            if (formType === 'login') {
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+            } else {
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+            }
         }
     </script>
 </body>
