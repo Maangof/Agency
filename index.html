@@ -61,49 +61,40 @@
   </div>
 
   <script>
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+  document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-  // Проверка, что введены значения
-  if (!username || !password) {
-    alert('Please enter both username and password.');
-    return;
-  }
+    if (!username || !password) {
+      alert('Please enter both username and password.');
+      return;
+    }
 
-  // Загружаем данные из B2 (users.json)
-  fetch('https://maangoff.s3.eu-central-003.backblazeb2.com/users.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Failed to load users.json');
-      }
-      return response.json();
-    })
-    .then(data => {
-      let userFound = false;
+    fetch('https://maangoff.s3.eu-central-003.backblazeb2.com/users.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load users.json');
+        }
+        return response.json();
+      })
+      .then(users => {
+        const user = users.find(user => user.username === username && user.password === password);
 
-      // Проверяем каждый объект в users.json
-      data.forEach(user => {
-        if (user.username === username && user.password === password) {
-          userFound = true;
-          // Если данные правильные, сохраняем состояние пользователя
+        if (user) {
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', username);
-          window.location.href = 'Profile.html'; // Переход на страницу профиля
+          window.location.href = 'Profile.html';
+        } else {
+          alert('Invalid username or password.');
         }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
       });
-
-      if (!userFound) {
-        alert('Invalid username or password');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again later.');
-    });
-});
+  });
 </script>
 
 </body>
