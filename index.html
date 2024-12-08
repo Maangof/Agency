@@ -8,140 +8,205 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
       background-color: #fff;
-      color: #333;
     }
-    .login-container {
-      max-width: 400px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #f9f9f9;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .login-container h2 {
+    header {
+      background-color: #fff;
       text-align: center;
+      padding: 80px 0;
+    }
+    .logo-container {
+      font-family: 'Playfair Display', serif;
+    }
+    h1 {
+      font-size: 4em;
+      color: #f4d03f;
+      margin: 0;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2em;
       color: #333;
+      letter-spacing: 1px;
+      margin-top: 10px;
     }
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    nav {
+      background-color: #f4f4f4;
+      padding: 10px 0;
+      text-align: center;
     }
-    .btn {
-      background-color: #007BFF;
+    nav a {
+      margin: 0 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #007BFF;
+    }
+    .hero {
+      background: url('https://github.com/Maangof/Agency/raw/d77af7d12c54b27c69c26c87aa31dee1c0c990c1/face-1511873_1920.jpg') no-repeat center center/cover;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
-    }
-    .btn:hover {
-      background-color: #0056b3;
-    }
-    .error {
-      color: red;
       text-align: center;
+    }
+    .hero h2 {
+      font-size: 3em;
+      margin: 0;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+    }
+    .tab {
+      display: none;
+    }
+    .active-tab {
+      display: block;
     }
   </style>
 </head>
 <body>
 
-  <div class="login-container">
-    <h2 id="form-title">Login</h2>
-
-    <!-- Login Form -->
-    <form id="loginForm" style="display: block;">
-      <input type="text" id="login-username" placeholder="Username" required>
-      <input type="password" id="login-password" placeholder="Password" required>
-      <button type="submit" class="btn">Login</button>
-      <p class="error" id="login-error-message"></p>
-    </form>
-
-    <!-- Register Form -->
-    <form id="registerForm" style="display: none;">
-      <input type="text" id="register-username" placeholder="Username" required>
-      <input type="password" id="register-password" placeholder="Password" required>
-      <button type="submit" class="btn">Register</button>
-      <p class="error" id="register-error-message"></p>
-    </form>
-
-    <p id="toggle-form" style="text-align: center; cursor: pointer;">Don't have an account? Register</p>
+<header>
+  <div class="logo-container">
+    <h1>Maangoff</h1>
+    <p class="slogan">Unveiling Beauty, Shaping Futures</p>
   </div>
+</header>
 
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+<nav>
+  <a href="javascript:void(0);" onclick="openModal()">Account</a>
+  <a href="profile.html" id="profileLink" style="display:none;">My Profile</a>
+</nav>
 
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID",
-      measurementId: "YOUR_MEASUREMENT_ID"
-    };
+<div class="hero">
+  <h2>Discover Beauty and Talent</h2>
+</div>
 
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div id="loginTab" class="tab active-tab">
+      <h2>Login</h2>
+      <input type="text" placeholder="Email" id="loginEmail">
+      <input type="password" placeholder="Password" id="loginPassword">
+      <button onclick="login()">Login</button>
+      <p>Don't have an account? <a href="javascript:void(0);" onclick="showRegisterTab()">Register</a></p>
+    </div>
+    <div id="registerTab" class="tab">
+      <h2>Register</h2>
+      <input type="text" placeholder="Name" id="registerName">
+      <input type="email" placeholder="Email" id="registerEmail">
+      <input type="password" placeholder="Password" id="registerPassword">
+      <button onclick="register()">Register</button>
+      <p>Already have an account? <a href="javascript:void(0);" onclick="showLoginTab()">Login</a></p>
+    </div>
+  </div>
+</div>
 
-    // Toggle between login and registration
-    const toggleForm = document.getElementById('toggle-form');
-    const formTitle = document.getElementById('form-title');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
+<footer>
+  <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
+</footer>
 
-    toggleForm.addEventListener('click', () => {
-      if (loginForm.style.display === 'none') {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        formTitle.textContent = 'Login';
-        toggleForm.textContent = "Don't have an account? Register";
-      } else {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        formTitle.textContent = 'Register';
-        toggleForm.textContent = "Already have an account? Login";
-      }
-    });
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+  import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-    // Handle login
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-      const username = document.getElementById('login-username').value;
-      const password = document.getElementById('login-password').value;
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth();
+  const db = getFirestore();
 
-      auth.signInWithEmailAndPassword(username, password)
-        .then(() => {
-          window.location.href = 'Profile.html';
-        })
-        .catch(error => {
-          document.getElementById('login-error-message').textContent = error.message;
+  function login() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        alert('Logged in successfully!');
+        window.location.href = '/profile.html';
+      })
+      .catch((error) => {
+        alert('Login failed: ' + error.message);
+      });
+  }
+
+  function register() {
+    const name = document.getElementById('registerName').value;
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerPassword').value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        setDoc(doc(db, "users", userCredential.user.uid), {
+          name: name,
+          email: email
         });
-    });
+        alert('Account created successfully!');
+      })
+      .catch((error) => {
+        alert('Registration failed: ' + error.message);
+      });
+  }
 
-    // Handle registration
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  function showRegisterTab() {
+    document.getElementById('registerTab').classList.add('active-tab');
+    document.getElementById('loginTab').classList.remove('active-tab');
+  }
 
-      const username = document.getElementById('register-username').value;
-      const password = document.getElementById('register-password').value;
+  function showLoginTab() {
+    document.getElementById('loginTab').classList.add('active-tab');
+    document.getElementById('registerTab').classList.remove('active-tab');
+  }
 
-      auth.createUserWithEmailAndPassword(username, password)
-        .then(() => {
-          window.location.href = 'Profile.html';
-        })
-        .catch(error => {
-          document.getElementById('register-error-message').textContent = error.message;
-        });
-    });
-  </script>
+  document.querySelector('.close-btn').addEventListener('click', function() {
+    document.getElementById('modal').style.display = 'none';
+  });
+
+  function openModal() {
+    document.getElementById('modal').style.display = 'block';
+  }
+
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('modal')) {
+      document.getElementById('modal').style.display = 'none';
+    }
+  }
+</script>
 
 </body>
 </html>
