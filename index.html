@@ -142,7 +142,7 @@
 <footer>
   <p>&copy; 2024 Maangoff Modeling Agency. All rights reserved.</p>
 </footer>
-
+  
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
@@ -201,13 +201,13 @@
   function showLoginTab() {
     document.getElementById('loginTab').classList.add('active-tab');
     document.getElementById('registerTab').classList.remove('active-tab');
-    document.getElementById('profileLink').style.display = 'inline-block';
   }
 
   document.querySelector('.close-btn').addEventListener('click', function() {
     document.getElementById('modal').style.display = 'none';
   });
 
+  // Функция openModal должна быть определена здесь
   function openModal() {
     document.getElementById('modal').style.display = 'block';
   }
