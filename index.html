@@ -61,35 +61,49 @@
   </div>
 
   <script>
-    // Подключаем API Backblaze для получения users.json
-    const B2_API_KEY = 'K003hkyUDVCOI95vyyc9DJsprMuY1mI';
-    const B2_BUCKET_ID = '930b5c5ce1d59e3391310b1e';
-    const B2_ENDPOINT = 'https://s3.eu-central-003.backblazeb2.com';
-    const USERS_FILE_PATH = 'users.json';  // путь к файлу в бакете
+  document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
 
-    async function fetchUsers() {
-      const response = await fetch(`${B2_ENDPOINT}/${B2_BUCKET_ID}/${USERS_FILE_PATH}`);
-      const data = await response.json();
-      return data;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    // Проверка, что введены значения
+    if (!username || !password) {
+      alert('Please enter both username and password.');
+      return;
     }
 
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
-      
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const users = await fetchUsers();
-      const user = users.find(user => user.username === username && user.password === password);
+    // Загружаем данные из B2 (users.json)
+    fetch('https://maangoff.s3.eu-central-003.backblazeb2.com/users.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load users.json');
+        }
+        return response.json();
+      })
+      .then(data => {
+        let userFound = false;
 
-      if (user) {
-        // Успешный вход, сохраняем пользователя в сессии
-        sessionStorage.setItem('user', JSON.stringify(user));
-        window.location.href = 'Profile.html';
-      } else {
-        // Ошибка, неправильный логин или пароль
-        document.getElementById('error-message').textContent = 'Invalid username or password.';
-      }
-    });
-  </script>
+        // Проверяем каждый объект в users.json
+        data.forEach(user => {
+          if (user.username === username && user.password === password) {
+            userFound = true;
+            // Если данные правильные, сохраняем состояние пользователя
+            sessionStorage.setItem('loggedIn', 'true');
+            sessionStorage.setItem('username', username);
+            window.location.href = 'Profile.html'; // Переход на страницу профиля
+          }
+        });
+
+        if (!userFound) {
+          alert('Invalid username or password');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again later.');
+      });
+  });
+</script>
 </body>
 </html>
