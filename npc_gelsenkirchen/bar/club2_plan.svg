@@ -1,0 +1,283 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1366 952" width="1366" height="952">
+<defs><pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#101016"/><line x1="0" y1="0" x2="0" y2="8" stroke="#3a4a70" stroke-width="3"/></pattern><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9cc4ff"/></marker></defs>
+<rect width="100%" height="100%" fill="#14141a"/>
+<text x="40" y="34" font-size="20" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">КЛУБ «NEON» — 2 ЭТАЖА, вид сверху. 1 клетка = 1 м</text>
+<text x="40" y="56" font-size="12" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">Зал 16 × 12 м как в ClubRoom.gd; стойка и сцена — те же коллизии. Кухня — пристройка к северу (одноэтажная).</text>
+<text x="40" y="90.0" font-size="15" fill="#ffd9b0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">1 ЭТАЖ (EG) · пол 0 м, потолок 4 м</text>
+<line x1="40.0" y1="114.0" x2="40.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="78.0" y1="114.0" x2="78.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="116.0" y1="114.0" x2="116.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="154.0" y1="114.0" x2="154.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="192.0" y1="114.0" x2="192.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="230.0" y1="114.0" x2="230.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="268.0" y1="114.0" x2="268.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="114.0" x2="287.0" y2="114.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="152.0" x2="287.0" y2="152.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="190.0" x2="287.0" y2="190.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="228.0" x2="287.0" y2="228.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="266.0" x2="287.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<rect x="40.0" y="114.0" width="247.0" height="152.0" fill="#2a1c18" stroke="#8888a0" stroke-width="4" />
+<text x="163.5" y="161.5" font-size="13" fill="#ffb070" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">КУХНЯ · Currywurst, Pommes</text>
+<rect x="97.0" y="115.9" width="153.9" height="26.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<text x="173.0" y="133.0" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">плита · фритюр · гриль, вытяжка</text>
+<rect x="41.9" y="121.6" width="26.6" height="45.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<text x="55.2" y="174.8" font-size="8" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">холод.</text>
+<rect x="123.6" y="178.6" width="91.2" height="30.4" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<text x="169.2" y="196.8" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">остров заготовки</text>
+<rect x="262.3" y="140.6" width="22.8" height="89.3" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<text x="273.7" y="186.2" font-size="8" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif" transform="rotate(-90 273.7 186.2)">мойка</text>
+<rect x="40.0" y="186.2" width="13.3" height="53.2" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<line x1="233.8" y1="114.0" x2="268.0" y2="114.0" stroke="#4cff7a" stroke-width="4" />
+<text x="250.9" y="106.4" font-size="9" fill="#7dff9a" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">NOTAUSGANG</text>
+<line x1="40.0" y1="266.0" x2="40.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="78.0" y1="266.0" x2="78.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="116.0" y1="266.0" x2="116.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="154.0" y1="266.0" x2="154.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="192.0" y1="266.0" x2="192.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="230.0" y1="266.0" x2="230.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="268.0" y1="266.0" x2="268.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="306.0" y1="266.0" x2="306.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="344.0" y1="266.0" x2="344.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="382.0" y1="266.0" x2="382.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="420.0" y1="266.0" x2="420.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="458.0" y1="266.0" x2="458.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="496.0" y1="266.0" x2="496.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="534.0" y1="266.0" x2="534.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="572.0" y1="266.0" x2="572.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="610.0" y1="266.0" x2="610.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="648.0" y1="266.0" x2="648.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="266.0" x2="648.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="304.0" x2="648.0" y2="304.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="342.0" x2="648.0" y2="342.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="380.0" x2="648.0" y2="380.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="418.0" x2="648.0" y2="418.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="456.0" x2="648.0" y2="456.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="494.0" x2="648.0" y2="494.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="532.0" x2="648.0" y2="532.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="570.0" x2="648.0" y2="570.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="608.0" x2="648.0" y2="608.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="646.0" x2="648.0" y2="646.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="684.0" x2="648.0" y2="684.0" stroke="#22222c" stroke-width="1" />
+<line x1="40.0" y1="722.0" x2="648.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<rect x="40.0" y="266.0" width="608.0" height="456.0" fill="#1c1c24" stroke="#8888a0" stroke-width="6" />
+<line x1="53.3" y1="266.0" x2="87.5" y2="266.0" stroke="#ffb070" stroke-width="4" />
+<text x="70.4" y="279.3" font-size="9" fill="#ffb070" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">КУХНЯ</text>
+<line x1="138.8" y1="266.0" x2="176.8" y2="266.0" stroke="#ff6040" stroke-width="5" />
+<text x="157.8" y="281.2" font-size="9" fill="#ff9a80" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">окно выдачи</text>
+<rect x="382.0" y="273.6" width="228.0" height="167.2" fill="#26263a" stroke="#6aa8ff" stroke-width="2" />
+<text x="496.0" y="353.4" font-size="13" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">СЦЕНА  h 0,6</text>
+<text x="496.0" y="368.6" font-size="10" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">над ней — второй свет (8 м)</text>
+<rect x="518.8" y="307.8" width="60.8" height="22.8" fill="#3a3f55" stroke="none" stroke-width="1" />
+<text x="549.2" y="323.0" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">пульт</text>
+<rect x="40.0" y="326.8" width="16.3" height="243.2" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="89.4" y="315.4" width="38.0" height="266.0" fill="#5a3a22" stroke="#ffb070" stroke-width="2" />
+<text x="108.4" y="448.4" font-size="12" fill="#ffd9b0" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif" transform="rotate(-90 108.4 448.4)">СТОЙКА</text>
+<rect x="56.3" y="315.4" width="33.1" height="266.0" fill="rgba(255,80,180,0.13)" stroke="#ff50b4" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="68.5" cy="448.4" r="11" fill="#ff50b4" stroke="#fff" stroke-width="2"/>
+<text x="68.5" y="451.4" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">W</text>
+<circle cx="144.5" cy="334.4" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="144.5" cy="418.0" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="144.5" cy="448.4" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="144.5" cy="478.8" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="144.5" cy="547.2" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="144.5" cy="570.0" r="7" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1"/>
+<circle cx="157.8" cy="380.0" r="8" fill="#ffd23f" stroke="#111" stroke-width="1.5"/>
+<text x="157.8" y="383.4" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">S</text>
+<circle cx="157.8" cy="513.0" r="8" fill="#ffd23f" stroke="#111" stroke-width="1.5"/>
+<text x="157.8" y="516.4" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">$</text>
+<circle cx="496.0" cy="478.8" r="8" fill="#ffd23f" stroke="#111" stroke-width="1.5"/>
+<text x="496.0" y="482.2" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">St</text>
+<circle cx="617.6" cy="478.8" r="8" fill="#ffd23f" stroke="#111" stroke-width="1.5"/>
+<text x="617.6" y="482.2" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">T</text>
+<circle cx="344.0" cy="706.8" r="8" fill="#ffd23f" stroke="#111" stroke-width="1.5"/>
+<text x="344.0" y="710.2" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">E</text>
+<circle cx="245.2" cy="372.4" r="14.44" fill="#3a3f55" stroke="#c9a36a" stroke-width="1"/>
+<circle cx="245.2" cy="486.4" r="14.44" fill="#3a3f55" stroke="#c9a36a" stroke-width="1"/>
+<circle cx="359.2" cy="554.8" r="14.44" fill="#3a3f55" stroke="#c9a36a" stroke-width="1"/>
+<rect x="534.0" y="592.8" width="114.0" height="129.2" fill="#262a30" stroke="#c8d0d8" stroke-width="2" />
+<line x1="534.0" y1="657.4" x2="648.0" y2="657.4" stroke="#c8d0d8" stroke-width="2" />
+<text x="591.0" y="628.9" font-size="11" fill="#e0f0ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">WC DAMEN</text>
+<text x="591.0" y="693.5" font-size="11" fill="#e0f0ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">WC HERREN</text>
+<line x1="534.0" y1="608.0" x2="534.0" y2="642.2" stroke="#7dff9a" stroke-width="4" />
+<circle cx="630.9" cy="625.1" r="6" fill="#ddd" stroke="none" stroke-width="1"/>
+<line x1="534.0" y1="672.6" x2="534.0" y2="706.8" stroke="#7dff9a" stroke-width="4" />
+<circle cx="630.9" cy="689.7" r="6" fill="#ddd" stroke="none" stroke-width="1"/>
+<rect x="573.9" y="596.6" width="19.0" height="11.4" fill="#ddd" stroke="none" stroke-width="1" />
+<rect x="573.9" y="708.7" width="19.0" height="11.4" fill="#ddd" stroke="none" stroke-width="1" />
+<rect x="62.8" y="684.0" width="228.0" height="38.0" fill="#2b2b36" stroke="#6aa8ff" stroke-width="2" />
+<line x1="62.8" y1="684.0" x2="62.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="72.3" y1="684.0" x2="72.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="81.8" y1="684.0" x2="81.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="91.3" y1="684.0" x2="91.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="100.8" y1="684.0" x2="100.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="110.3" y1="684.0" x2="110.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="119.8" y1="684.0" x2="119.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="129.3" y1="684.0" x2="129.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="138.8" y1="684.0" x2="138.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="148.3" y1="684.0" x2="148.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="157.8" y1="684.0" x2="157.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="167.3" y1="684.0" x2="167.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="176.8" y1="684.0" x2="176.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="186.3" y1="684.0" x2="186.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="195.8" y1="684.0" x2="195.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="205.3" y1="684.0" x2="205.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="214.8" y1="684.0" x2="214.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="224.3" y1="684.0" x2="224.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="233.8" y1="684.0" x2="233.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="243.3" y1="684.0" x2="243.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="252.8" y1="684.0" x2="252.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="262.3" y1="684.0" x2="262.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="271.8" y1="684.0" x2="271.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="281.3" y1="684.0" x2="281.3" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="290.8" y1="684.0" x2="290.8" y2="722.0" stroke="#4a5a80" stroke-width="1" />
+<line x1="78.0" y1="703.0" x2="271.8" y2="703.0" stroke="#9cc4ff" stroke-width="2" marker-end="url(#arr)"/>
+<text x="176.8" y="698.4" font-size="10" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ЛЕСТНИЦА ↑ 2 этаж (24 ступени, 6 м)</text>
+<rect x="408.6" y="689.7" width="91.2" height="32.3" fill="#1d2a4a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="435.2" y="661.2" width="38.0" height="19.0" fill="#3a3f55" stroke="none" stroke-width="1" />
+<rect x="313.6" y="716.3" width="60.8" height="7.6" fill="#ffcc00" stroke="#111" stroke-width="1" />
+<text x="344.0" y="739.1" font-size="11" fill="#7dff9a" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ВХОД · ШЛЮЗ</text>
+<rect x="214.8" y="266.0" width="136.8" height="5.7" fill="#6aa8ff" stroke="none" stroke-width="1" />
+<text x="283.2" y="283.1" font-size="9" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">вывеска NEON</text>
+<text x="718" y="258.0" font-size="15" fill="#c7b8ff" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">2 ЭТАЖ (1. OG) · пол 4,3 м, потолок 7,8 м</text>
+<line x1="718.0" y1="266.0" x2="718.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="756.0" y1="266.0" x2="756.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="794.0" y1="266.0" x2="794.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="832.0" y1="266.0" x2="832.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="870.0" y1="266.0" x2="870.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="908.0" y1="266.0" x2="908.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="946.0" y1="266.0" x2="946.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="984.0" y1="266.0" x2="984.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1022.0" y1="266.0" x2="1022.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1060.0" y1="266.0" x2="1060.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1098.0" y1="266.0" x2="1098.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1136.0" y1="266.0" x2="1136.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1174.0" y1="266.0" x2="1174.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1212.0" y1="266.0" x2="1212.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1250.0" y1="266.0" x2="1250.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1288.0" y1="266.0" x2="1288.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="1326.0" y1="266.0" x2="1326.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="266.0" x2="1326.0" y2="266.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="304.0" x2="1326.0" y2="304.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="342.0" x2="1326.0" y2="342.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="380.0" x2="1326.0" y2="380.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="418.0" x2="1326.0" y2="418.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="456.0" x2="1326.0" y2="456.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="494.0" x2="1326.0" y2="494.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="532.0" x2="1326.0" y2="532.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="570.0" x2="1326.0" y2="570.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="608.0" x2="1326.0" y2="608.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="646.0" x2="1326.0" y2="646.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="684.0" x2="1326.0" y2="684.0" stroke="#22222c" stroke-width="1" />
+<line x1="718.0" y1="722.0" x2="1326.0" y2="722.0" stroke="#22222c" stroke-width="1" />
+<rect x="718.0" y="266.0" width="608.0" height="456.0" fill="#1d1a22" stroke="#8888a0" stroke-width="6" />
+<rect x="1060.0" y="266.0" width="266.0" height="174.8" fill="url(#hatch)" stroke="#6aa8ff" stroke-width="1.5" />
+<text x="1193.0" y="345.8" font-size="12" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ПРОЁМ НАД СЦЕНОЙ</text>
+<text x="1193.0" y="361.0" font-size="10" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">вид на сцену сверху</text>
+<line x1="1060.0" y1="440.8" x2="1212.0" y2="440.8" stroke="#bfe0ff" stroke-width="4" />
+<line x1="1060.0" y1="266.0" x2="1060.0" y2="440.8" stroke="#bfe0ff" stroke-width="4" />
+<text x="1136.0" y="429.4" font-size="11" fill="#bfe0ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ГАЛЕРЕЯ (ограждение)</text>
+<circle cx="1094.2" cy="461.7" r="12.16" fill="#3a3f55" stroke="#c9a36a" stroke-width="1"/>
+<circle cx="1158.8" cy="461.7" r="12.16" fill="#3a3f55" stroke="#c9a36a" stroke-width="1"/>
+<rect x="718.0" y="266.0" width="342.0" height="174.8" fill="rgba(255,80,180,0.06)" stroke="#ff50b4" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="889.0" y="427.5" font-size="13" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ИГРОВАЯ</text>
+<rect x="813.0" y="324.9" width="98.8" height="57.0" fill="#0f3a22" stroke="#c9a36a" stroke-width="2" />
+<text x="862.4" y="357.2" font-size="10" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">бильярд</text>
+<rect x="973.4" y="302.1" width="28.9" height="49.4" fill="#0f3a22" stroke="#c9a36a" stroke-width="1.5" />
+<text x="987.8" y="326.8" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif" transform="rotate(-90 987.8 326.8)">кикер</text>
+<circle cx="748.4" cy="269.8" r="7" fill="#a01010" stroke="#fff" stroke-width="1"/>
+<circle cx="790.2" cy="269.8" r="7" fill="#a01010" stroke="#fff" stroke-width="1"/>
+<line x1="735.1" y1="356.8" x2="803.5" y2="356.8" stroke="#ffffff" stroke-width="2" />
+<text x="769.3" y="286.9" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">дартс</text>
+<rect x="917.5" y="267.9" width="34.2" height="22.8" fill="#3a1030" stroke="#ff50b4" stroke-width="1" />
+<text x="934.6" y="302.1" font-size="9" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">jukebox</text>
+<rect x="718.0" y="372.4" width="5.7" height="45.6" fill="#20e0c0" stroke="none" stroke-width="1" />
+<text x="733.2" y="421.8" font-size="8" fill="#7fffe6" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">окно</text>
+<rect x="718.0" y="440.8" width="243.2" height="239.4" fill="rgba(106,168,255,0.06)" stroke="#6aa8ff" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="771.2" y="456.0" font-size="13" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ЛАУНЖ</text>
+<rect x="729.4" y="471.2" width="159.6" height="167.2" fill="#2a1530" stroke="none" stroke-width="1" />
+<rect x="718.0" y="520.6" width="12.9" height="68.4" fill="#ff7a20" stroke="none" stroke-width="1" />
+<text x="748.4" y="606.1" font-size="9" fill="#ffb070" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">камин</text>
+<rect x="842.6" y="490.2" width="31.9" height="114.0" fill="#1a2a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="752.2" y="620.5" width="91.2" height="32.3" fill="#1a2a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="775.0" y="539.6" width="45.6" height="30.4" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="748.4" y="459.8" width="30.4" height="30.4" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="809.2" y="456.0" width="30.4" height="30.4" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="972.6" y="476.9" width="188.1" height="167.2" fill="rgba(201,163,106,0.06)" stroke="#c9a36a" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="1079.0" y="659.3" font-size="12" fill="#e8d2a8" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">СТОЛИКИ И ДИВАНЫ</text>
+<rect x="1008.7" y="480.7" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1012.5" y="503.5" width="49.4" height="26.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="1008.7" y="532.0" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1094.2" y="480.7" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1098.0" y="503.5" width="49.4" height="26.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="1094.2" y="532.0" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1008.7" y="568.1" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1012.5" y="590.9" width="49.4" height="26.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="1008.7" y="619.4" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1094.2" y="568.1" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="1098.0" y="590.9" width="49.4" height="26.6" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="1094.2" y="619.4" width="57.0" height="20.9" fill="#2a3a5a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="740.8" y="684.0" width="228.0" height="38.0" fill="url(#hatch)" stroke="#6aa8ff" stroke-width="1.5" />
+<line x1="740.8" y1="684.0" x2="968.8" y2="684.0" stroke="#bfe0ff" stroke-width="4" />
+<text x="854.8" y="707.6" font-size="10" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">проём лестницы ↓</text>
+<rect x="968.8" y="661.2" width="91.2" height="60.8" fill="rgba(125,255,154,0.08)" stroke="#7dff9a" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="1014.4" y="674.5" font-size="9" fill="#7dff9a" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">площадка</text>
+<circle cx="1044.8" cy="706.8" r="5" fill="#888" stroke="none" stroke-width="1"/>
+<text x="1044.8" y="720.1" font-size="8" fill="#aaa" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">гардероб</text>
+<rect x="1052.4" y="718.2" width="53.2" height="3.8" fill="#20e0c0" stroke="none" stroke-width="1" />
+<rect x="1212.0" y="440.8" width="114.0" height="95.0" fill="#2a1220" stroke="#ff8aa8" stroke-width="2" />
+<rect x="1291.0" y="452.2" width="32.3" height="72.2" fill="#5a1426" stroke="none" stroke-width="1" />
+<rect x="1257.6" y="471.2" width="22.8" height="34.2" fill="#3a3f55" stroke="none" stroke-width="1" />
+<line x1="1212.0" y1="471.2" x2="1212.0" y2="505.4" stroke="#ff50b4" stroke-width="4" />
+<text x="1240.5" y="492.9" font-size="18" fill="#4070ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">1</text>
+<rect x="1323.3" y="469.3" width="2.7" height="38.0" fill="#20e0c0" stroke="none" stroke-width="1" />
+<rect x="1212.0" y="535.8" width="114.0" height="93.1" fill="#2a1220" stroke="#ff8aa8" stroke-width="2" />
+<rect x="1291.0" y="546.2" width="32.3" height="72.2" fill="#5a1426" stroke="none" stroke-width="1" />
+<rect x="1257.6" y="565.2" width="22.8" height="34.2" fill="#3a3f55" stroke="none" stroke-width="1" />
+<line x1="1212.0" y1="565.2" x2="1212.0" y2="599.5" stroke="#ff50b4" stroke-width="4" />
+<text x="1240.5" y="586.9" font-size="18" fill="#ff40a0" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">2</text>
+<rect x="1323.3" y="563.4" width="2.7" height="38.0" fill="#20e0c0" stroke="none" stroke-width="1" />
+<rect x="1212.0" y="628.9" width="114.0" height="93.1" fill="#2a1220" stroke="#ff8aa8" stroke-width="2" />
+<rect x="1291.0" y="639.3" width="32.3" height="72.2" fill="#5a1426" stroke="none" stroke-width="1" />
+<rect x="1257.6" y="658.3" width="22.8" height="34.2" fill="#3a3f55" stroke="none" stroke-width="1" />
+<line x1="1212.0" y1="658.3" x2="1212.0" y2="692.6" stroke="#ff50b4" stroke-width="4" />
+<text x="1240.5" y="680.0" font-size="18" fill="#ff7030" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">3</text>
+<rect x="1323.3" y="656.5" width="2.7" height="38.0" fill="#20e0c0" stroke="none" stroke-width="1" />
+<text x="1269.0" y="433.2" font-size="11" fill="#ff8aa8" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ПРИВАТНЫЕ КОМНАТЫ</text>
+<rect x="1174.0" y="440.8" width="38.0" height="281.2" fill="rgba(255,138,168,0.05)" stroke="#ff8aa8" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="1193.0" y="581.4" font-size="9" fill="#ff8aa8" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif" transform="rotate(-90 1193.0 581.4)">коридор</text>
+<text x="718" y="756.0" font-size="15" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">Легенда</text>
+<rect x="718" y="769.0" width="22" height="14" fill="#5a3a22" stroke="#ffb070" stroke-width="1.5"/>
+<text x="750" y="780.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">коллизия из ClubRoom.gd (стойка) — не меняется</text>
+<rect x="718" y="790.0" width="22" height="14" fill="#26263a" stroke="#6aa8ff" stroke-width="1.5"/>
+<text x="750" y="801.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">сцена (коллизия) / лестница</text>
+<rect x="718" y="811.0" width="22" height="14" fill="#3a3f55" stroke="#c9a36a" stroke-width="1.5"/>
+<text x="750" y="822.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">мебель и техника (новое)</text>
+<rect x="718" y="832.0" width="22" height="14" fill="#262a30" stroke="#c8d0d8" stroke-width="1.5"/>
+<text x="750" y="843.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">туалеты — на месте прежней кабинки</text>
+<rect x="718" y="853.0" width="22" height="14" fill="#2a1220" stroke="#ff8aa8" stroke-width="1.5"/>
+<text x="750" y="864.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">приватные комнаты (кабинка переезжает сюда, ×3)</text>
+<rect x="718" y="874.0" width="22" height="14" fill="url(#hatch)" stroke="#6aa8ff" stroke-width="1.5"/>
+<text x="750" y="885.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">проём в перекрытии</text>
+<line x1="718" y1="902.0" x2="740" y2="902.0" stroke="#7dff9a" stroke-width="4"/>
+<text x="750" y="906.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">дверь / проём</text>
+<rect x="718" y="916.0" width="22" height="6" fill="#20e0c0"/>
+<text x="750" y="927.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">заколоченное окно, за ним свечение поля</text>
+<text x="1098" y="756.0" font-size="13" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">Точки игры (1 этаж)</text>
+<circle cx="1107" cy="774.0" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="1107" y="778.0" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">S</text>
+<text x="1122" y="778.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">смена бармена</text>
+<circle cx="1107" cy="794.0" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="1107" y="798.0" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">$</text>
+<text x="1122" y="798.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">скупка Ankauf</text>
+<circle cx="1107" cy="814.0" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="1107" y="818.0" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">St</text>
+<text x="1122" y="818.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">сцена</text>
+<circle cx="1107" cy="834.0" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="1107" y="838.0" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">T</text>
+<text x="1122" y="838.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">чаевые</text>
+<circle cx="1107" cy="854.0" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="1107" y="858.0" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">E</text>
+<text x="1122" y="858.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">выход на улицу</text>
+<circle cx="1107" cy="874.0" r="8" fill="#ff50b4" stroke="#fff"/>
+<text x="1122" y="878.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">W — работница бара (Farah)</text>
+</svg>
