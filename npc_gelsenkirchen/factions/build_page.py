@@ -147,6 +147,7 @@ let db = null, me = null, canWrite = true, filter = "all";
 let current = "overview";
 try { const h = location.hash.slice(1); if (h) current = h; } catch (e) {}
 
+const qh = q => { let h = 5381; for (const c of String(q)) h = ((h << 5) + h + c.codePointAt(0)) >>> 0; return h.toString(36); };
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const col = id => `var(${COLORS[id] || "--muted"})`;
 
@@ -158,21 +159,21 @@ function keysOf(f) {
   if ((f.items || []).length) k.push(`${f.id}.items`);
   (f.dialogues || []).forEach(x => k.push(`${f.id}.dlg.${x.id}`));
   (f.missions || []).forEach(x => k.push(`${f.id}.mis.${x.id}`));
-  (f.open_questions || []).forEach((q, i) => k.push(`${f.id}.q.${i}`));
+  (f.open_questions || []).forEach((q, i) => k.push(`${f.id}.q.${qh(q)}`));
   return k;
 }
 function romanceKeys() {
   const r = D.romance; if (!r) return [];
   const k = Object.keys(r.system || {}).map(x => `rom.sys.${x}`);
-  (r.romances || []).forEach(x => { k.push(`rom.${x.id}.line`, `rom.${x.id}.quests`, `rom.${x.id}.space`, `rom.${x.id}.visit`); (x.dialogues || []).forEach(d => k.push(`rom.${x.id}.dlg.${d.id}`)); (x.open_questions || []).forEach((q, i) => k.push(`rom.${x.id}.q.${i}`)); });
-  (r.friendships || []).forEach(x => { k.push(`fr.${x.id}`); (x.open_questions || []).forEach((q, i) => k.push(`fr.${x.id}.q.${i}`)); });
-  (r.open_questions || []).forEach((q, i) => k.push(`rom.q.${i}`));
+  (r.romances || []).forEach(x => { k.push(`rom.${x.id}.line`, `rom.${x.id}.quests`, `rom.${x.id}.space`, `rom.${x.id}.visit`); (x.dialogues || []).forEach(d => k.push(`rom.${x.id}.dlg.${d.id}`)); (x.open_questions || []).forEach((q, i) => k.push(`rom.${x.id}.q.${qh(q)}`)); });
+  (r.friendships || []).forEach(x => { k.push(`fr.${x.id}`); (x.open_questions || []).forEach((q, i) => k.push(`fr.${x.id}.q.${qh(q)}`)); });
+  (r.open_questions || []).forEach((q, i) => k.push(`rom.q.${qh(q)}`));
   return k;
 }
 function overviewKeys() {
   const o = D.overview, k = ["ov.why", "ov.matrix"];
   (o.cross_missions || []).forEach(m => k.push(`ov.cross.${m.id}`));
-  (o.questions || []).forEach((q, i) => k.push(`ov.q.${i}`));
+  (o.questions || []).forEach((q, i) => k.push(`ov.q.${qh(q)}`));
   return k;
 }
 const done = key => reviews[key] && (reviews[key].status || (reviews[key].note || "").trim());
@@ -208,7 +209,7 @@ function reviewBox(key, opts = {}) {
       <span class="who" data-who></span></div>`}
     <label class="eyebrow" for="t_${key}">${label}</label>
     <textarea id="t_${key}" placeholder="${ph}">${esc(r.note || "")}</textarea>
-    <div class="row"><button type="button" class="save">Сохранить</button><span class="msg" role="status"></span></div>
+    <div class="row"><button type="button" class="save">Сохранить</button><span class="msg" role="status">сохраняется само при наборе</span></div>
   </div>`;
 }
 function card(key, inner, extraClass = "") {
@@ -225,9 +226,10 @@ function renderOverview() {
     `<div class="tblwrap"><table class="matrix"><thead><tr><th></th>${D.factions.map(f => `<th style="color:${col(f.id)}">${esc(f.title.split(/[«(—]/)[0].trim())}</th>`).join("")}</tr></thead><tbody>` +
     D.factions.map(a => `<tr><th style="color:${col(a.id)}">${esc(a.title.split(/[«(—]/)[0].trim())}</th>` + D.factions.map(b => a.id === b.id ? `<td class="self">—</td>` : `<td>${esc((a.relations || {})[b.id] || "")}</td>`).join("") + `</tr>`).join("") +
     `</tbody></table></div>`) + `</section>`;
+  if ((o.decisions || []).length) h += `<section><h3>Принятые решения автора <span class="n">${o.decisions.length}</span></h3><div class="card"><ol class="steps">${o.decisions.map(d => `<li>${esc(d)}</li>`).join("")}</ol></div></section>`;
   if ((o.cross_missions || []).length) h += `<section style="--fc:var(--brick)"><h3>Сквозные расследования <span class="n">через родственников в разных фракциях</span></h3><div class="grid2">${o.cross_missions.map(m => card(`ov.cross.${m.id}`, missionHTML(m))).join("")}</div></section>`;
   if ((o.notes || []).length) h += `<section><h3>Как это ложится на игру</h3><div class="card"><ul class="lines" style="--fc:var(--brick)">${o.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div></section>`;
-  if ((o.questions || []).length) h += `<section><h3>Общие вопросы <span class="n">${o.questions.length}</span></h3>` + o.questions.map((q, i) => card(`ov.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
+  if ((o.questions || []).length) h += `<section><h3>Общие вопросы <span class="n">${o.questions.length}</span></h3>` + o.questions.map((q, i) => card(`ov.q.${qh(q)}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
 }
 
@@ -255,7 +257,7 @@ function renderRomance() {
       `<div style="display:grid;gap:10px">` + card(`rom.${x.id}.space`, `<h4>Личное пространство: ${esc((x.personal_space || {}).name)}</h4><span class="meta">${esc((x.personal_space || {}).location)}</span><p>${esc((x.personal_space || {}).description)}</p>${((x.personal_space || {}).activities || []).length ? `<ul class="lines">${x.personal_space.activities.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`) +
       card(`rom.${x.id}.visit`, (() => { const v = x.home_visit || {}; return `<h4>В гостях на базе</h4><dl class="kv"><dt>как позвать</dt><dd>${esc(v.how_to_invite)}</dd><dt>прибытие</dt><dd>${esc(v.arrival)}</dd><dt>ночь (16+)</dt><dd>${esc(v.overnight_16)}</dd><dt>бонус</dt><dd>${esc(v.bonus)}</dd><dt>онлайн</dt><dd>${esc(v.online)}</dd></dl>${(v.activities || []).length ? `<ul class="lines">${v.activities.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`; })()) + `</div></div>`;
     if ((x.dialogues || []).length) h += `<div class="grid2">${x.dialogues.map(d => card(`rom.${x.id}.dlg.${d.id}`, dlgHTML(d))).join("")}</div>`;
-    (x.open_questions || []).forEach((q, i) => { h += card(`rom.${x.id}.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q"); });
+    (x.open_questions || []).forEach((q, i) => { h += card(`rom.${x.id}.q.${qh(q)}`, `<p class="qtext">${esc(q)}</p>`, "q"); });
     h += `</section>`;
   });
   if ((r.friendships || []).length) {
@@ -269,10 +271,10 @@ function renderRomance() {
         ${x.rewards ? `<dt>награда</dt><dd>${esc(x.rewards)}</dd>` : ""}</dl>`);
     });
     h += `</div>`;
-    r.friendships.forEach(x => (x.open_questions || []).forEach((q, i) => { h += card(`fr.${x.id}.q.${i}`, `<p class="qtext"><span class="meta">${esc(x.npc)}:</span> ${esc(q)}</p>`, "q"); }));
+    r.friendships.forEach(x => (x.open_questions || []).forEach((q, i) => { h += card(`fr.${x.id}.q.${qh(q)}`, `<p class="qtext"><span class="meta">${esc(x.npc)}:</span> ${esc(q)}</p>`, "q"); }));
     h += `</section>`;
   }
-  if ((r.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Общие вопросы <span class="n">${r.open_questions.length}</span></h3>` + r.open_questions.map((q, i) => card(`rom.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
+  if ((r.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Общие вопросы <span class="n">${r.open_questions.length}</span></h3>` + r.open_questions.map((q, i) => card(`rom.q.${qh(q)}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
 }
 
@@ -296,7 +298,7 @@ function renderFaction(f) {
       ${(d.choices || []).length ? `<div class="choices">${d.choices.map((c, i) => `<div><span class="k">${i + 1}.</span><span>${esc(c.text)} <span class="meta">→ ${esc(c.result)}</span></span></div>`).join("")}</div>` : ""}`), "grid2");
   h += sec("Задания", f.missions, m => card(`${f.id}.mis.${m.id}`, missionHTML(m)), "grid2");
   if ((f.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Вопросы автору <span class="n">${f.open_questions.length}</span></h3>` +
-    f.open_questions.map((q, i) => card(`${f.id}.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
+    f.open_questions.map((q, i) => card(`${f.id}.q.${qh(q)}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
 }
 
@@ -347,6 +349,9 @@ function wire(root) {
       save(key, { status: v, note: ta.value }, msg);
     });
     box.querySelector(".save").onclick = () => save(key, { note: ta.value }, msg);
+    let timer = null;
+    ta.addEventListener("input", () => { msg.textContent = "…"; clearTimeout(timer); timer = setTimeout(() => save(key, { note: ta.value }, msg), 900); });
+    ta.addEventListener("blur", () => { if (ta.value !== ((reviews[key] || {}).note || "")) { clearTimeout(timer); save(key, { note: ta.value }, msg); } });
   });
 }
 
@@ -363,7 +368,7 @@ render();
   } catch (e) { db = null; }
   if (!db) { st.textContent = "Решения не сохраняются: откройте страницу, войдя в claude.ai."; return; }
   try { me = user ? await user.id() : null; } catch (e) {}
-  st.textContent = "Решения сохраняются автоматически по кнопке и штампу.";
+  st.textContent = "Штампы и текст сохраняются сами; кнопка «Сохранить» — на всякий случай.";
   db.collection("reviews").onSnapshot(snap => {
     snap.docs.forEach(d => { const v = d.data(); if (v && v.key) reviews[v.key] = v; });
     // не перерисовываем поле, в котором сейчас печатают
