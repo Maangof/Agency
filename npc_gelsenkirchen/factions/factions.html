@@ -159,9 +159,34 @@ function opsKeys() {
   const o = D.ops; if (!o) return [];
   const k = Object.keys(o.system || {}).map(x => `op.sys.${x}`);
   (o.operations || []).forEach(x => k.push(`op.${x.id}`));
+  (o.ideas || []).forEach(i => k.push(`op.idea.${qh(i.title || i)}`));
   if ((o.ui || []).length) k.push("op.ui");
   (o.open_questions || []).forEach(q => k.push(`op.q.${qh(q)}`));
   return k;
+}
+function allQuestions() {
+  const out = [];
+  (D.overview.questions || []).forEach(q => out.push({ sec: "overview", where: "Общая концепция", key: `ov.q.${qh(q)}`, q }));
+  if (D.ops) (D.ops.open_questions || []).forEach(q => out.push({ sec: "ops", where: "Групповые операции", key: `op.q.${qh(q)}`, q }));
+  if (D.romance) {
+    (D.romance.open_questions || []).forEach(q => out.push({ sec: "romance", where: "Отношения", key: `rom.q.${qh(q)}`, q }));
+    (D.romance.romances || []).forEach(x => (x.open_questions || []).forEach(q => out.push({ sec: "romance", where: "Отношения · " + x.npc, key: `rom.${x.id}.q.${qh(q)}`, q })));
+    (D.romance.friendships || []).forEach(x => (x.open_questions || []).forEach(q => out.push({ sec: "romance", where: "Дружба · " + x.npc, key: `fr.${x.id}.q.${qh(q)}`, q })));
+  }
+  D.factions.forEach(f => (f.open_questions || []).forEach(q => out.push({ sec: f.id, where: f.title.split(/[«(—]/)[0].trim(), key: `${f.id}.q.${qh(q)}`, q, c: col(f.id) })));
+  return out;
+}
+function renderQuestions() {
+  const qs = allQuestions();
+  const open = qs.filter(x => !done(x.key)).length;
+  let h = `<div class="fhead" style="--fc:var(--brick)"><span class="eyebrow">Сводка</span><h2>Все вопросы</h2></div>
+    <p class="lead">${qs.length} вопросов из всех разделов, без ответа — ${open}. Ответ, данный здесь, виден и в самом разделе.</p>`;
+  let last = "";
+  qs.forEach(x => {
+    if (x.where.split(" · ")[0] !== last) { last = x.where.split(" · ")[0]; h += `<h3 style="font:700 19px/1.2 var(--display);margin:14px 0 0">${esc(last)}</h3>`; }
+    h += card(x.key, `<p class="qtext">${x.where.includes(" · ") ? `<span class="meta">${esc(x.where.split(" · ")[1])}:</span> ` : ""}${esc(x.q)}</p>`, "q");
+  });
+  return h;
 }
 function overviewKeys() {
   const o = D.overview, k = ["ov.why", "ov.matrix"];
@@ -179,7 +204,7 @@ function renderStat() {
 
 function renderNav() {
   const nav = document.getElementById("nav");
-  const items = [{ id: "overview", title: "Общая концепция", sub: "почему остались · связи", keys: overviewKeys(), c: "var(--brick)" }]
+  const items = [{ id: "questions", title: "Все вопросы", sub: "ответить в одном месте", keys: allQuestions().map(x => x.key), c: "var(--ink)" }, { id: "overview", title: "Общая концепция", sub: "почему остались · связи", keys: overviewKeys(), c: "var(--brick)" }]
     .concat(D.factions.map(f => ({ id: f.id, title: f.title.split(/[«(—]/)[0].trim(), sub: (f.title.match(/«[^»]+»|\([^)]+\)/) || [""])[0], keys: keysOf(f), c: col(f.id) })))
     .concat(D.ops ? [{ id: "ops", title: "Групповые операции", sub: "лобби · налёты · синхронные действия", keys: opsKeys(), c: "var(--f-ops)" }] : [])
     .concat(D.romance ? [{ id: "romance", title: "Отношения", sub: "любовные линии · личные задания · гости", keys: romanceKeys(), c: "var(--f-love)" }] : []);
@@ -283,6 +308,7 @@ function renderOps() {
       <div class="tblwrap"><table class="items"><thead><tr><th>Фаза</th><th>Где</th><th>Что делать</th><th>Синхронно</th><th>Провал</th></tr></thead><tbody>${(x.phases || []).map(p => `<tr><td><b>${esc(p.name)}</b></td><td>${esc(p.where)}</td><td>${esc(p.what)}</td><td>${p.sync_action ? esc(`${p.sync_action.points} точки · окно ${p.sync_action.window_s} с · держать ${p.sync_action.hold_s} с`) : "—"}</td><td>${esc(p.fail)}</td></tr>`).join("")}</tbody></table></div>
       <dl class="kv"><dt>добыча</dt><dd>${esc(x.loot)}</dd><dt>эвакуация</dt><dd>${esc(x.extraction)}</dd><dt>предательство</dt><dd>${esc(x.betrayal_moments)}</dd><dt>награда</dt><dd>${esc(x.rewards)}</dd>${(x.new_mechanics || []).length ? `<dt>новые механики</dt><dd>${x.new_mechanics.map(m => `<span class="tag new">${esc(m)}</span>`).join(" ")}</dd>` : ""}</dl>`) + `</section>`;
   });
+  if ((o.ideas || []).length) h += `<section style="--fc:${fc}"><h3>Идеи следующих операций <span class="n">выберите, что развивать</span></h3><div class="grid2">${o.ideas.map(i => card(`op.idea.${qh(i.title || i)}`, `<h4>${esc(i.title || "")}</h4><p>${esc(i.pitch || i.summary || i.text || (typeof i === "string" ? i : ""))}</p>`)).join("")}</div></section>`;
   if ((o.ui || []).length) h += `<section style="--fc:${fc}"><h3>Интерфейс</h3>` + card("op.ui", `<ul class="lines">${o.ui.map(u => `<li>${esc(u)}</li>`).join("")}</ul>`) + `</section>`;
   if ((o.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Вопросы <span class="n">${o.open_questions.length}</span></h3>` + o.open_questions.map(q => card(`op.q.${qh(q)}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
@@ -322,7 +348,7 @@ function applyFilter() {
 function render() {
   const sheet = document.getElementById("sheet");
   const f = D.factions.find(x => x.id === current);
-  sheet.innerHTML = f ? renderFaction(f) : (current === "romance" && D.romance) ? renderRomance() : (current === "ops" && D.ops) ? renderOps() : renderOverview();
+  sheet.innerHTML = current === "questions" ? renderQuestions() : f ? renderFaction(f) : (current === "romance" && D.romance) ? renderRomance() : (current === "ops" && D.ops) ? renderOps() : renderOverview();
   wire(sheet);
   renderNav(); renderStat(); applyFilter(); paintWho();
 }
