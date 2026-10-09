@@ -288,6 +288,7 @@ poster_obj("PosterLastCall", "poster_lastcall.png", (0.62, 1.65, -5.985), "+z", 
 poster_obj("PosterMaske", "poster_maske.png", (4.885, 1.45, 4.3), "-x", 0.5)
 group("CUT1")
 poster_obj("PosterRock", "poster_rocknight.png", (7.985, 1.7, 1.3), "-x", 0.7)
+poster_obj("PosterPils", "poster_pils.png", (2.9, 1.85, 5.985), "-z", 0.7)
 group("F2")
 poster_obj("PosterDerby", "poster_derby.png", (0.2, F2 + 1.6, -5.985), "+z", 0.7)
 
