@@ -1,0 +1,158 @@
+{
+ "AnisotropyBarnLamp": {
+  "tris": 10203,
+  "max_tex": [
+   2048,
+   2048
+  ],
+  "n_tex": 4,
+  "dims_m": [
+   0.19,
+   0.23,
+   0.26
+  ]
+ },
+ "ChairDamaskPurplegold": {
+  "tris": 9984,
+  "max_tex": [
+   1024,
+   512
+  ],
+  "n_tex": 9,
+  "dims_m": [
+   0.83,
+   0.57,
+   0.69
+  ]
+ },
+ "CommercialRefrigerator": {
+  "tris": 208679,
+  "max_tex": [
+   2048,
+   2048
+  ],
+  "n_tex": 10,
+  "dims_m": [
+   0.88,
+   0.99,
+   2.18
+  ]
+ },
+ "DiffuseTransmissionPlant": {
+  "tris": 68409,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 6,
+  "dims_m": [
+   0.7,
+   0.66,
+   0.84
+  ]
+ },
+ "GlamVelvetSofa": {
+  "tris": 4196,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 2,
+  "dims_m": [
+   2.19,
+   1.02,
+   0.79
+  ]
+ },
+ "GlassBrokenWindow": {
+  "tris": 987,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 5,
+  "dims_m": [
+   0.51,
+   0.04,
+   0.52
+  ]
+ },
+ "GlassVaseFlowers": {
+  "tris": 14036,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 4,
+  "dims_m": [
+   0.22,
+   0.14,
+   0.2
+  ]
+ },
+ "IridescenceLamp": {
+  "tris": 18866,
+  "max_tex": [
+   2048,
+   2048
+  ],
+  "n_tex": 3,
+  "dims_m": [
+   0.3,
+   0.3,
+   0.48
+  ]
+ },
+ "IridescentDishWithOlives": {
+  "tris": 24448,
+  "max_tex": [
+   2048,
+   1024
+  ],
+  "n_tex": 11,
+  "dims_m": [
+   0.53,
+   0.53,
+   0.36
+  ]
+ },
+ "SheenChair": {
+  "tris": 39936,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 7,
+  "dims_m": [
+   0.83,
+   0.57,
+   0.69
+  ]
+ },
+ "SheenWoodLeatherSofa": {
+  "tris": 46492,
+  "max_tex": [
+   2048,
+   2048
+  ],
+  "n_tex": 13,
+  "dims_m": [
+   2.73,
+   0.92,
+   1.12
+  ]
+ },
+ "SpecularSilkPouf": {
+  "tris": 81280,
+  "max_tex": [
+   1024,
+   1024
+  ],
+  "n_tex": 2,
+  "dims_m": [
+   0.61,
+   0.61,
+   0.2
+  ]
+ }
+}
