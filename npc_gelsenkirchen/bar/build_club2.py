@@ -854,6 +854,9 @@ world = bpy.data.worlds.new("w")
 world.color = (0.002, 0.002, 0.003)
 sc.world = world
 
+# состаривание и полумрак (дефицит электричества)
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "club_aging.py"), encoding="utf-8").read())
+
 sc.render.engine = "CYCLES"
 sc.cycles.device = "CPU"
 sc.cycles.samples = 16 if QUICK else 48
