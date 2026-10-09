@@ -9,6 +9,8 @@ for f in sorted(glob.glob(os.path.join(HERE, "data", "[A-Z]_*.json"))):
 ORDER = ["smoke_cult", "shut_ins", "traders", "bandits", "liquidators", "greys"]
 data["factions"].sort(key=lambda x: ORDER.index(x["id"]) if x["id"] in ORDER else 99)
 data["overview"] = json.load(open(os.path.join(HERE, "data", "overview.json"), encoding="utf-8"))
+_rp = os.path.join(HERE, "data", "romance.json")
+data["romance"] = json.load(open(_rp, encoding="utf-8")) if os.path.exists(_rp) else None
 payload = json.dumps(data, ensure_ascii=False).replace("</", "<\\/")
 
 PAGE = r"""<title>Фракции Гельзенкирхена</title>
@@ -20,7 +22,7 @@ PAGE = r"""<title>Фракции Гельзенкирхена</title>
 :root {
   --paper: #e8ebe8; --sheet: #f6f7f5; --ink: #1f2624; --muted: #5d6764; --line: #c9cfcb; --brick: #a8482b; --focus: #d9871f;
   --ok: #2f7d4f; --chg: #b7791f; --no: #b23a3a;
-  --f-smoke: #7d68a8; --f-shut: #3f8061; --f-trade: #b8801f; --f-band: #b23a3a; --f-liq: #b89a12; --f-grey: #6b787c;
+  --f-love: #b4436c; --f-smoke: #7d68a8; --f-shut: #3f8061; --f-trade: #b8801f; --f-band: #b23a3a; --f-liq: #b89a12; --f-grey: #6b787c;
   --display: "Archivo Narrow", "Arial Narrow", sans-serif;
   --body: "Archivo", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -28,11 +30,11 @@ PAGE = r"""<title>Фракции Гельзенкирхена</title>
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #161b1a; --sheet: #1e2422; --ink: #e3e8e5; --muted: #98a39f; --line: #333b38; --brick: #d2694a; --focus: #f0a43c;
   --ok: #5fb07f; --chg: #e0a646; --no: #e06a5e;
-  --f-smoke: #a993d6; --f-shut: #6bb38f; --f-trade: #e0a84a; --f-band: #e06a5e; --f-liq: #e2c440; --f-grey: #9aa7ab; color-scheme: dark } }
+  --f-love: #e07a9e; --f-smoke: #a993d6; --f-shut: #6bb38f; --f-trade: #e0a84a; --f-band: #e06a5e; --f-liq: #e2c440; --f-grey: #9aa7ab; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #161b1a; --sheet: #1e2422; --ink: #e3e8e5; --muted: #98a39f; --line: #333b38; --brick: #d2694a; --focus: #f0a43c;
   --ok: #5fb07f; --chg: #e0a646; --no: #e06a5e;
-  --f-smoke: #a993d6; --f-shut: #6bb38f; --f-trade: #e0a84a; --f-band: #e06a5e; --f-liq: #e2c440; --f-grey: #9aa7ab; color-scheme: dark }
+  --f-love: #e07a9e; --f-smoke: #a993d6; --f-shut: #6bb38f; --f-trade: #e0a84a; --f-band: #e06a5e; --f-liq: #e2c440; --f-grey: #9aa7ab; color-scheme: dark }
 * { box-sizing: border-box }
 body { background: var(--paper); color: var(--ink); font: 15px/1.5 var(--body); margin: 0; padding-inline: 16px; padding-block: 14px 40px }
 .wrap { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px }
@@ -159,15 +161,24 @@ function keysOf(f) {
   (f.open_questions || []).forEach((q, i) => k.push(`${f.id}.q.${i}`));
   return k;
 }
+function romanceKeys() {
+  const r = D.romance; if (!r) return [];
+  const k = Object.keys(r.system || {}).map(x => `rom.sys.${x}`);
+  (r.romances || []).forEach(x => { k.push(`rom.${x.id}.line`, `rom.${x.id}.quests`, `rom.${x.id}.space`, `rom.${x.id}.visit`); (x.dialogues || []).forEach(d => k.push(`rom.${x.id}.dlg.${d.id}`)); (x.open_questions || []).forEach((q, i) => k.push(`rom.${x.id}.q.${i}`)); });
+  (r.friendships || []).forEach(x => { k.push(`fr.${x.id}`); (x.open_questions || []).forEach((q, i) => k.push(`fr.${x.id}.q.${i}`)); });
+  (r.open_questions || []).forEach((q, i) => k.push(`rom.q.${i}`));
+  return k;
+}
 function overviewKeys() {
   const o = D.overview, k = ["ov.why", "ov.matrix"];
+  (o.cross_missions || []).forEach(m => k.push(`ov.cross.${m.id}`));
   (o.questions || []).forEach((q, i) => k.push(`ov.q.${i}`));
   return k;
 }
 const done = key => reviews[key] && (reviews[key].status || (reviews[key].note || "").trim());
 
 function renderStat() {
-  const all = overviewKeys().concat(...D.factions.map(keysOf));
+  const all = overviewKeys().concat(romanceKeys(), ...D.factions.map(keysOf));
   const n = all.filter(done).length;
   document.getElementById("stat").innerHTML = `${all.length} пунктов · <b>${n}</b> с решением · ${D.factions.length} фракций`;
 }
@@ -175,7 +186,8 @@ function renderStat() {
 function renderNav() {
   const nav = document.getElementById("nav");
   const items = [{ id: "overview", title: "Общая концепция", sub: "почему остались · связи", keys: overviewKeys(), c: "var(--brick)" }]
-    .concat(D.factions.map(f => ({ id: f.id, title: f.title.split(/[«(—]/)[0].trim(), sub: (f.title.match(/«[^»]+»|\([^)]+\)/) || [""])[0], keys: keysOf(f), c: col(f.id) })));
+    .concat(D.factions.map(f => ({ id: f.id, title: f.title.split(/[«(—]/)[0].trim(), sub: (f.title.match(/«[^»]+»|\([^)]+\)/) || [""])[0], keys: keysOf(f), c: col(f.id) })))
+    .concat(D.romance ? [{ id: "romance", title: "Отношения", sub: "любовные линии · личные задания · гости", keys: romanceKeys(), c: "var(--f-love)" }] : []);
   nav.innerHTML = items.map(it => `<button type="button" data-id="${it.id}" aria-current="${it.id === current}">
       <span class="sw" style="background:${it.c}"></span>
       <span><span class="nm">${esc(it.title)}</span><span class="sub">${esc(it.sub)}</span></span>
@@ -213,8 +225,54 @@ function renderOverview() {
     `<div class="tblwrap"><table class="matrix"><thead><tr><th></th>${D.factions.map(f => `<th style="color:${col(f.id)}">${esc(f.title.split(/[«(—]/)[0].trim())}</th>`).join("")}</tr></thead><tbody>` +
     D.factions.map(a => `<tr><th style="color:${col(a.id)}">${esc(a.title.split(/[«(—]/)[0].trim())}</th>` + D.factions.map(b => a.id === b.id ? `<td class="self">—</td>` : `<td>${esc((a.relations || {})[b.id] || "")}</td>`).join("") + `</tr>`).join("") +
     `</tbody></table></div>`) + `</section>`;
+  if ((o.cross_missions || []).length) h += `<section style="--fc:var(--brick)"><h3>Сквозные расследования <span class="n">через родственников в разных фракциях</span></h3><div class="grid2">${o.cross_missions.map(m => card(`ov.cross.${m.id}`, missionHTML(m))).join("")}</div></section>`;
   if ((o.notes || []).length) h += `<section><h3>Как это ложится на игру</h3><div class="card"><ul class="lines" style="--fc:var(--brick)">${o.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></div></section>`;
   if ((o.questions || []).length) h += `<section><h3>Общие вопросы <span class="n">${o.questions.length}</span></h3>` + o.questions.map((q, i) => card(`ov.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
+  return h;
+}
+
+function missionHTML(m) {
+  return `<h4>${esc(m.title)}</h4><span class="meta">${esc(m.type || "")}${m.giver ? " · даёт: " + esc(m.giver) : ""}</span> ${m.new_mechanic ? `<span class="tag new">новая механика</span>` : ""}
+      <p>${esc(m.summary)}</p>${(m.steps || []).length ? `<ol class="steps">${m.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>` : ""}
+      <dl class="kv">${m.rewards ? `<dt>награда</dt><dd>${esc(m.rewards)}</dd>` : ""}${m.consequences ? `<dt>последствия</dt><dd>${esc(m.consequences)}</dd>` : ""}${m.unlocks ? `<dt>открывает</dt><dd>${esc(m.unlocks)}</dd>` : ""}</dl>`;
+}
+function dlgHTML(d) {
+  return `<h4>${esc(d.title)}</h4><span class="meta">${esc(d.situation || "")}</span>
+      <div class="script">${(d.lines || []).map(l => `<div><div class="who">${esc(l.who)}</div>${esc(l.text)}</div>`).join("")}</div>
+      ${(d.choices || []).length ? `<div class="choices">${d.choices.map((c, i) => `<div><span class="k">${i + 1}.</span><span>${esc(c.text)} <span class="meta">→ ${esc(c.result)}</span></span></div>`).join("")}</div>` : ""}`;
+}
+const SYS_NAMES = { affinity: "Близость", personal_space: "Личное пространство", invites: "Приглашение домой", online: "Онлайн и кооператив", content_rules: "Рамки контента 16+ / 18+" };
+function renderRomance() {
+  const r = D.romance, fc = "var(--f-love)";
+  let h = `<div class="fhead" style="--fc:${fc}"><span class="eyebrow">Личные линии</span><h2>Отношения, личные задания и гости</h2></div>`;
+  h += `<section style="--fc:${fc}"><h3>Как устроено</h3><div class="grid2">${Object.entries(r.system || {}).map(([k, v]) => card(`rom.sys.${k}`, `<h4>${esc(SYS_NAMES[k] || k)}</h4><p>${esc(v)}</p>`)).join("")}</div></section>`;
+  (r.romances || []).forEach(x => {
+    h += `<section style="--fc:${fc}"><h3>${esc(x.npc)} <span class="n">${esc(x.faction)} · ${esc(x.age)} · ${esc(x.for_heroes)}</span></h3>`;
+    h += card(`rom.${x.id}.line`, `<h4>Линия</h4><p>${esc(x.why_them)}</p>${x.prerequisites ? `<dl class="kv"><dt>условия</dt><dd>${esc(x.prerequisites)}</dd></dl>` : ""}
+      <ol class="steps">${(x.stages || []).map(st => `<li><b>${esc(st.name)}.</b> ${esc(st.what_happens)}${st.unlocks ? ` <span class="meta">→ ${esc(st.unlocks)}</span>` : ""}</li>`).join("")}</ol>
+      <dl class="kv"><dt>риски и финалы</dt><dd>${esc(x.risks_and_endings)}</dd>${(x.mature_slots || []).length ? `<dt>слоты 18+</dt><dd>${x.mature_slots.map(m => `<code>${esc(m)}</code>`).join("<br>")}</dd>` : ""}</dl>`);
+    h += `<div class="grid2">` + card(`rom.${x.id}.quests`, `<h4>Личные задания</h4>` + (x.personal_quests || []).map(m => `<div class="card" style="padding:10px">${missionHTML(m)}</div>`).join("")) +
+      `<div style="display:grid;gap:10px">` + card(`rom.${x.id}.space`, `<h4>Личное пространство: ${esc((x.personal_space || {}).name)}</h4><span class="meta">${esc((x.personal_space || {}).location)}</span><p>${esc((x.personal_space || {}).description)}</p>${((x.personal_space || {}).activities || []).length ? `<ul class="lines">${x.personal_space.activities.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`) +
+      card(`rom.${x.id}.visit`, (() => { const v = x.home_visit || {}; return `<h4>В гостях на базе</h4><dl class="kv"><dt>как позвать</dt><dd>${esc(v.how_to_invite)}</dd><dt>прибытие</dt><dd>${esc(v.arrival)}</dd><dt>ночь (16+)</dt><dd>${esc(v.overnight_16)}</dd><dt>бонус</dt><dd>${esc(v.bonus)}</dd><dt>онлайн</dt><dd>${esc(v.online)}</dd></dl>${(v.activities || []).length ? `<ul class="lines">${v.activities.map(a => `<li>${esc(a)}</li>`).join("")}</ul>` : ""}`; })()) + `</div></div>`;
+    if ((x.dialogues || []).length) h += `<div class="grid2">${x.dialogues.map(d => card(`rom.${x.id}.dlg.${d.id}`, dlgHTML(d))).join("")}</div>`;
+    (x.open_questions || []).forEach((q, i) => { h += card(`rom.${x.id}.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q"); });
+    h += `</section>`;
+  });
+  if ((r.friendships || []).length) {
+    h += `<section style="--fc:${fc}"><h3>Дружба и личные пространства <span class="n">${r.friendships.length}</span></h3><div class="grid2">`;
+    r.friendships.forEach(x => {
+      const ps = x.personal_space || {}, v = x.home_visit;
+      h += card(`fr.${x.id}`, `<h4>${esc(x.npc)}</h4><span class="meta">${esc(x.faction)}</span><p>${esc(x.why)}</p>
+        ${(x.personal_quests || []).map(m => `<div class="card" style="padding:10px">${missionHTML(m)}</div>`).join("")}
+        <dl class="kv"><dt>пространство</dt><dd><b>${esc(ps.name)}</b> — ${esc(ps.location)}. ${esc(ps.description)}</dd>
+        <dt>в гости</dt><dd>${typeof v === "string" ? esc(v) : v ? esc(v.cannot_visit || [v.how_to_invite, v.arrival, (v.activities || []).join("; "), v.bonus].filter(Boolean).join(" · ")) : ""}</dd>
+        ${x.rewards ? `<dt>награда</dt><dd>${esc(x.rewards)}</dd>` : ""}</dl>`);
+    });
+    h += `</div>`;
+    r.friendships.forEach(x => (x.open_questions || []).forEach((q, i) => { h += card(`fr.${x.id}.q.${i}`, `<p class="qtext"><span class="meta">${esc(x.npc)}:</span> ${esc(q)}</p>`, "q"); }));
+    h += `</section>`;
+  }
+  if ((r.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Общие вопросы <span class="n">${r.open_questions.length}</span></h3>` + r.open_questions.map((q, i) => card(`rom.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
 }
 
@@ -236,9 +294,7 @@ function renderFaction(f) {
   h += sec("Диалоги", f.dialogues, d => card(`${f.id}.dlg.${d.id}`, `<h4>${esc(d.title)}</h4><span class="meta">${esc(d.situation)}</span>
       <div class="script">${(d.lines || []).map(l => `<div><div class="who">${esc(l.who)}</div>${esc(l.text)}</div>`).join("")}</div>
       ${(d.choices || []).length ? `<div class="choices">${d.choices.map((c, i) => `<div><span class="k">${i + 1}.</span><span>${esc(c.text)} <span class="meta">→ ${esc(c.result)}</span></span></div>`).join("")}</div>` : ""}`), "grid2");
-  h += sec("Задания", f.missions, m => card(`${f.id}.mis.${m.id}`, `<h4>${esc(m.title)}</h4><span class="meta">${esc(m.type)} · даёт: ${esc(m.giver)}</span> ${m.new_mechanic ? `<span class="tag new">новая механика</span>` : ""}
-      <p>${esc(m.summary)}</p>${(m.steps || []).length ? `<ol class="steps">${m.steps.map(s => `<li>${esc(s)}</li>`).join("")}</ol>` : ""}
-      <dl class="kv"><dt>награда</dt><dd>${esc(m.rewards)}</dd><dt>последствия</dt><dd>${esc(m.consequences)}</dd></dl>`), "grid2");
+  h += sec("Задания", f.missions, m => card(`${f.id}.mis.${m.id}`, missionHTML(m)), "grid2");
   if ((f.open_questions || []).length) h += `<section style="--fc:${fc}"><h3>Вопросы автору <span class="n">${f.open_questions.length}</span></h3>` +
     f.open_questions.map((q, i) => card(`${f.id}.q.${i}`, `<p class="qtext">${esc(q)}</p>`, "q")).join("") + `</section>`;
   return h;
@@ -254,7 +310,7 @@ function applyFilter() {
 function render() {
   const sheet = document.getElementById("sheet");
   const f = D.factions.find(x => x.id === current);
-  sheet.innerHTML = f ? renderFaction(f) : renderOverview();
+  sheet.innerHTML = f ? renderFaction(f) : (current === "romance" && D.romance) ? renderRomance() : renderOverview();
   wire(sheet);
   renderNav(); renderStat(); applyFilter(); paintWho();
 }
