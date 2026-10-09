@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1282 784" width="1282" height="784">
+<rect width="100%" height="100%" fill="#14141a"/>
+<text x="60.0" y="34.0" font-size="18" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">NEON BAR (16+) — схема зала, вид сверху. 1 клетка = 1 м</text>
+<line x1="60" y1="60" x2="60" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="112" y1="60" x2="112" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="164" y1="60" x2="164" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="216" y1="60" x2="216" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="268" y1="60" x2="268" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="320" y1="60" x2="320" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="372" y1="60" x2="372" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="424" y1="60" x2="424" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="476" y1="60" x2="476" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="528" y1="60" x2="528" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="580" y1="60" x2="580" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="632" y1="60" x2="632" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="684" y1="60" x2="684" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="736" y1="60" x2="736" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="788" y1="60" x2="788" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="840" y1="60" x2="840" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="892" y1="60" x2="892" y2="684" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="60" x2="892" y2="60" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="112" x2="892" y2="112" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="164" x2="892" y2="164" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="216" x2="892" y2="216" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="268" x2="892" y2="268" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="320" x2="892" y2="320" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="372" x2="892" y2="372" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="424" x2="892" y2="424" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="476" x2="892" y2="476" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="528" x2="892" y2="528" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="580" x2="892" y2="580" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="632" x2="892" y2="632" stroke="#22222c" stroke-width="1"/>
+<line x1="60" y1="684" x2="892" y2="684" stroke="#22222c" stroke-width="1"/>
+<rect x="60.0" y="60.0" width="832.0" height="624.0" fill="#1c1c24" stroke="#8888a0" stroke-width="6" />
+<rect x="528.0" y="70.4" width="312.0" height="228.8" fill="#26263a" stroke="#6aa8ff" stroke-width="2" />
+<text x="684.0" y="169.2" font-size="14" fill="#9cc4ff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">СЦЕНА  h 0,6 м</text>
+<text x="684.0" y="190.0" font-size="11" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">коллизия StageFloor 6 × 4,4</text>
+<rect x="715.2" y="117.2" width="83.2" height="31.2" fill="#3a3f55" stroke="none" stroke-width="1" />
+<text x="756.8" y="138.0" font-size="10" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">пульт</text>
+<rect x="533.2" y="70.4" width="31.2" height="26.0" fill="#3a3f55" stroke="none" stroke-width="1" />
+<rect x="803.6" y="70.4" width="31.2" height="26.0" fill="#3a3f55" stroke="none" stroke-width="1" />
+<text x="684.0" y="88.6" font-size="10" fill="#aaa" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">колонки · ферма с прожекторами</text>
+<rect x="512.4" y="239.4" width="15.6" height="46.8" fill="#3a3f55" stroke="none" stroke-width="1" />
+<text x="504.6" y="273.2" font-size="9" fill="#aaa" text-anchor="end" font-weight="normal" font-family="Arial, sans-serif">ступени</text>
+<rect x="60.0" y="143.2" width="22.4" height="332.8" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="127.6" y="127.6" width="52.0" height="364.0" fill="#5a3a22" stroke="#ffb070" stroke-width="2" />
+<text transform="translate(158.6,309.6) rotate(-90)" font-size="13" fill="#ffd9b0" text-anchor="middle" font-weight="bold" font-family="Arial">СТОЙКА 7 × 1 м, h 1,1</text>
+<rect x="82.4" y="127.6" width="45.2" height="364.0" fill="rgba(255,80,180,0.13)" stroke="#ff50b4" stroke-width="1.5" stroke-dasharray="6 4"/>
+<circle cx="99.0" cy="309.6" r="14" fill="#ff50b4" stroke="#fff" stroke-width="2" />
+<line x1="99.0" y1="309.6" x2="125.0" y2="309.6" stroke="#fff" stroke-width="3"/>
+<text x="99.0" y="333.0" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">W</text>
+<circle cx="99.0" cy="437.0" r="10" fill="#2a1426" stroke="#ff50b4" stroke-width="2" />
+<text x="99.0" y="440.6" font-size="9" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A2</text>
+<circle cx="99.0" cy="226.4" r="10" fill="#2a1426" stroke="#ff50b4" stroke-width="2" />
+<text x="99.0" y="230.0" font-size="9" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A3</text>
+<circle cx="99.0" cy="468.2" r="10" fill="#2a1426" stroke="#ff50b4" stroke-width="2" />
+<text x="99.0" y="471.8" font-size="9" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A4</text>
+<circle cx="99.0" cy="398.0" r="10" fill="#2a1426" stroke="#ff50b4" stroke-width="2" />
+<text x="99.0" y="401.6" font-size="9" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A5</text>
+<circle cx="101.6" cy="91.2" r="10" fill="#2a1426" stroke="#ff50b4" stroke-width="2" />
+<text x="101.6" y="94.8" font-size="9" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A6</text>
+<text x="99.0" y="291.4" font-size="10" fill="#ff9ad5" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">A1</text>
+<rect x="78.2" y="60.0" width="46.8" height="5.2" fill="#888" stroke="none" stroke-width="1" />
+<text x="101.6" y="78.2" font-size="9" fill="#ccc" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">PERSONAL</text>
+<circle cx="203.0" cy="153.6" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="203.0" cy="268.0" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="203.0" cy="309.6" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="203.0" cy="351.2" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="203.0" cy="444.8" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="203.0" cy="476.0" r="9" fill="#2a4a8a" stroke="#6aa8ff" stroke-width="1" />
+<circle cx="221.2" cy="216.0" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="221.2" y="220.7" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">S</text>
+<circle cx="221.2" cy="398.0" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="221.2" y="402.7" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">$</text>
+<circle cx="684.0" cy="351.2" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="684.0" y="355.9" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">St</text>
+<circle cx="850.4" cy="351.2" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="850.4" y="355.9" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">T</text>
+<circle cx="476.0" cy="663.2" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="476.0" y="667.9" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">E</text>
+<circle cx="476.0" cy="590.4" r="6" fill="#4cff7a" stroke="none" stroke-width="1" />
+<circle cx="715.2" cy="590.4" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="715.2" y="595.1" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">Bi</text>
+<circle cx="814.0" cy="543.6" r="9" fill="#ffd23f" stroke="#111" stroke-width="1.5" />
+<text x="814.0" y="548.3" font-size="10" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">Bo</text>
+<rect x="840.0" y="309.6" width="20.8" height="20.8" fill="#3a3f55" stroke="none" stroke-width="1" />
+<rect x="730.8" y="507.2" width="10.4" height="176.8" fill="#5a3a22" stroke="#ffb070" stroke-width="1" />
+<rect x="730.8" y="502.0" width="161.2" height="10.4" fill="#5a3a22" stroke="#ffb070" stroke-width="1" />
+<rect x="741.2" y="512.4" width="150.8" height="171.6" fill="rgba(160,20,60,0.25)" stroke="none" stroke-width="1" />
+<rect x="847.8" y="538.4" width="44.2" height="135.2" fill="#5a1426" stroke="none" stroke-width="1" />
+<text x="871.2" y="606.0" font-size="10" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">диван</text>
+<text x="803.6" y="663.2" font-size="13" fill="#ff8aa8" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">КАБИНКА</text>
+<rect x="728.2" y="564.4" width="3.6" height="52.0" fill="#a0143c" stroke="none" stroke-width="1" />
+<rect x="434.4" y="676.2" width="83.2" height="10.4" fill="#ffcc00" stroke="#111" stroke-width="1" />
+<text x="476.0" y="707.4" font-size="12" fill="#7dff9a" text-anchor="middle" font-weight="bold" font-family="Arial, sans-serif">ВХОД · ШЛЮЗ (SCHLEUSE)</text>
+<rect x="434.4" y="590.4" width="83.2" height="72.8" fill="none" stroke="#ffcc00" stroke-width="1.5" stroke-dasharray="4 4"/>
+<circle cx="340.8" cy="205.6" r="19.76" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<circle cx="340.8" cy="361.6" r="19.76" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<circle cx="496.8" cy="455.2" r="19.76" fill="#3a3f55" stroke="#c9a36a" stroke-width="1" />
+<rect x="80.8" y="639.8" width="104.0" height="44.2" fill="#1d2a4a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="109.4" y="603.4" width="46.8" height="26.0" fill="#3a3f55" stroke="none" stroke-width="1" />
+<rect x="195.2" y="639.8" width="104.0" height="44.2" fill="#1d2a4a" stroke="#6aa8ff" stroke-width="1" />
+<rect x="223.8" y="603.4" width="46.8" height="26.0" fill="#3a3f55" stroke="none" stroke-width="1" />
+<text x="190.0" y="671.0" font-size="10" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">диваны (лаунж-угол)</text>
+<rect x="299.2" y="60.0" width="187.2" height="7.8" fill="#6aa8ff" stroke="none" stroke-width="1" />
+<text x="392.8" y="83.4" font-size="11" fill="#9cc4ff" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif">вывеска NEON · BLAU-WEISS 04</text>
+<text x="684.0" y="62.6" font-size="1" fill="#e8e8f0" text-anchor="middle" font-weight="normal" font-family="Arial, sans-serif"></text>
+<text x="878" y="82" font-size="14" fill="#888" font-family="Arial">N↑</text>
+<text x="932.0" y="70.0" font-size="15" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">Легенда</text>
+<rect x="932" y="85" width="22" height="14" fill="#5a3a22" stroke="#ffb070" stroke-width="1.5"/>
+<text x="964" y="96" font-size="12" fill="#e8e8f0" font-family="Arial">коллизия игры (не меняется)</text>
+<rect x="932" y="107" width="22" height="14" fill="#26263a" stroke="#6aa8ff" stroke-width="1.5"/>
+<text x="964" y="118" font-size="12" fill="#e8e8f0" font-family="Arial">сцена (коллизия)</text>
+<rect x="932" y="129" width="22" height="14" fill="#3a3f55" stroke="#c9a36a" stroke-width="1.5"/>
+<text x="964" y="140" font-size="12" fill="#e8e8f0" font-family="Arial">декор — предложение</text>
+<rect x="932" y="151" width="22" height="14" fill="rgba(255,80,180,0.13)" stroke="#ff50b4" stroke-width="1.5"/>
+<text x="964" y="162" font-size="12" fill="#e8e8f0" font-family="Arial">зона работницы, проход 0,87 м</text>
+<rect x="932" y="173" width="22" height="14" fill="#3a3f55" stroke="#c9a36a" stroke-width="1.5"/>
+<text x="964" y="184" font-size="12" fill="#e8e8f0" font-family="Arial">у западной стены — задняя стенка бара</text>
+<text x="932.0" y="212.0" font-size="13" fill="#e8e8f0" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">Точки игры (ClubSpot / ShopCounter)</text>
+<circle cx="943" cy="230" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="234" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">S</text>
+<text x="964" y="234" font-size="12" fill="#e8e8f0" font-family="Arial">смена бармена (−4,9; −3,0)</text>
+<circle cx="943" cy="251" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="255" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">$</text>
+<text x="964" y="255" font-size="12" fill="#e8e8f0" font-family="Arial">скупка Ankauf (−4,9; 0,5)</text>
+<circle cx="943" cy="272" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="276" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">St</text>
+<text x="964" y="276" font-size="12" fill="#e8e8f0" font-family="Arial">сцена (4,0; −0,4)</text>
+<circle cx="943" cy="293" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="297" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">T</text>
+<text x="964" y="297" font-size="12" fill="#e8e8f0" font-family="Arial">чаевые (7,2; −0,4)</text>
+<circle cx="943" cy="314" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="318" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">Bi</text>
+<text x="964" y="318" font-size="12" fill="#e8e8f0" font-family="Arial">вход в кабинку</text>
+<circle cx="943" cy="335" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="339" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">Bo</text>
+<text x="964" y="339" font-size="12" fill="#e8e8f0" font-family="Arial">выход из кабинки</text>
+<circle cx="943" cy="356" r="8" fill="#ffd23f" stroke="#111"/>
+<text x="943" y="360" font-size="9" fill="#111" text-anchor="middle" font-weight="bold" font-family="Arial">E</text>
+<text x="964" y="360" font-size="12" fill="#e8e8f0" font-family="Arial">выход на улицу; ● вход (0; 4,2)</text>
+<text x="932.0" y="389.0" font-size="13" fill="#ff9ad5" text-anchor="start" font-weight="bold" font-family="Arial, sans-serif">Работница W (−7,25; −1,2), лицом на +X</text>
+<text x="932.0" y="409.0" font-size="12" fill="#e8e8f0" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">Якоря анимаций (только вид, без сети):</text>
+<text x="938.0" y="427.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A1 — пивные краны</text>
+<text x="938.0" y="444.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A2 — касса / кофемашина</text>
+<text x="938.0" y="461.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A3 — мойка, стаканы</text>
+<text x="938.0" y="478.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A4 — холодильник</text>
+<text x="938.0" y="495.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A5 — приём скупки</text>
+<text x="938.0" y="512.0" font-size="12" fill="#ff9ad5" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">A6 — служебная дверь</text>
+<text x="932.0" y="537.0" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">Все стулья — между точками S и $,</text>
+<text x="932.0" y="553.0" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">к точкам свободный подход ≥ 0,7 м.</text>
+<text x="932.0" y="569.0" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">Столики, диваны, пульт — новые</text>
+<text x="932.0" y="585.0" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">коллизии: нужен --nav-check.</text>
+<text x="932.0" y="601.0" font-size="11" fill="#aaa" text-anchor="start" font-weight="normal" font-family="Arial, sans-serif">Размер зала 16 × 12 × 4 м (SIZE).</text>
+</svg>
