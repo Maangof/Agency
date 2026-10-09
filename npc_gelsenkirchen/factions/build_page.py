@@ -73,7 +73,7 @@ section > h3 .n { font: 500 12px var(--mono); color: var(--muted) }
 .card .meta { font: 400 12.5px var(--mono); color: var(--muted) }
 .card p { margin: 0; max-width: 75ch }
 .quote { border-left: 3px solid var(--fc); padding: 2px 0 2px 12px; font-style: italic }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; align-items: start }
 dl.kv { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); gap: 4px 12px; margin: 0; font-size: 14px }
 dl.kv dt { color: var(--muted); font: 400 12.5px var(--mono); padding-top: 2px }
 dl.kv dd { margin: 0; min-width: 0 }
