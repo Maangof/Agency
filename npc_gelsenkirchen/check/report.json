@@ -1,0 +1,289 @@
+{
+ "meshes": [
+  {
+   "name": "Body",
+   "tris": 107112,
+   "verts": 55834,
+   "mats": [
+    "Moretti.body"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "eyebrow001.obj.sub",
+   "tris": 768,
+   "verts": 438,
+   "mats": [
+    "Moretti.eyebrow001"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "eyelashes02.obj.sub",
+   "tris": 1472,
+   "verts": 864,
+   "mats": [
+    "Moretti.eyelashes02"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "high-poly.obj.sub",
+   "tris": 8160,
+   "verts": 4187,
+   "mats": [
+    "Moretti.high-poly"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "long01.obj.sub",
+   "tris": 16432,
+   "verts": 10700,
+   "mats": [
+    "Moretti.long01"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "Moretti.dress_mini",
+   "tris": 3502,
+   "verts": 1943,
+   "mats": [
+    "Moretti.dress_mini"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "stockings_fishnet_medium.obj.sub",
+   "tris": 8352,
+   "verts": 4912,
+   "mats": [
+    "Moretti.stockings_fishnet_medium"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "teeth_base.obj.sub",
+   "tris": 28480,
+   "verts": 16068,
+   "mats": [
+    "Moretti.teeth_base"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  },
+  {
+   "name": "tongue01.obj.sub",
+   "tris": 1792,
+   "verts": 953,
+   "mats": [
+    "Moretti.tongue01"
+   ],
+   "shape_keys": 0,
+   "vgroups": 97
+  }
+ ],
+ "armatures": [
+  {
+   "name": "Armature",
+   "bones": 97,
+   "sample": [
+    "mixamorig:Hips",
+    "mixamorig:Spine",
+    "mixamorig:Spine1",
+    "mixamorig:Spine2",
+    "mixamorig:Neck",
+    "mixamorig:Head",
+    "mixamorig:HeadTop_End",
+    "mixamorig:LeftShoulder",
+    "mixamorig:LeftArm",
+    "mixamorig:LeftForeArm",
+    "mixamorig:LeftHand",
+    "mixamorig:LeftHandThumb1"
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "name": "attack_bag",
+   "frames": [
+    1,
+    49
+   ]
+  },
+  {
+   "name": "attack_heel",
+   "frames": [
+    1,
+    93
+   ]
+  },
+  {
+   "name": "attack_use",
+   "frames": [
+    1,
+    59
+   ]
+  },
+  {
+   "name": "crouch_idle",
+   "frames": [
+    1,
+    165
+   ]
+  },
+  {
+   "name": "crouch_to_stand",
+   "frames": [
+    1,
+    37
+   ]
+  },
+  {
+   "name": "equip_torch",
+   "frames": [
+    1,
+    45
+   ]
+  },
+  {
+   "name": "idle",
+   "frames": [
+    1,
+    279
+   ]
+  },
+  {
+   "name": "idle_torch",
+   "frames": [
+    1,
+    153
+   ]
+  },
+  {
+   "name": "jump",
+   "frames": [
+    1,
+    42
+   ]
+  },
+  {
+   "name": "run",
+   "frames": [
+    1,
+    17
+   ]
+  },
+  {
+   "name": "stand_to_crouch",
+   "frames": [
+    1,
+    25
+   ]
+  },
+  {
+   "name": "unequip_torch",
+   "frames": [
+    1,
+    45
+   ]
+  },
+  {
+   "name": "walk",
+   "frames": [
+    1,
+    30
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "Moretti.body",
+   "textures": [
+    "valentina_skin_4k 4096x4096"
+   ]
+  },
+  {
+   "name": "Moretti.dress_mini",
+   "textures": [
+    "fabric-texture-01 2094x2950"
+   ]
+  },
+  {
+   "name": "Moretti.eyebrow001",
+   "textures": [
+    "eyebrow001 512x512",
+    "eyebrow001 512x512"
+   ]
+  },
+  {
+   "name": "Moretti.eyelashes02",
+   "textures": [
+    "eyelashes02 512x512"
+   ]
+  },
+  {
+   "name": "Moretti.high-poly",
+   "textures": [
+    "brown_eye 1024x1024"
+   ]
+  },
+  {
+   "name": "Moretti.long01",
+   "textures": [
+    "long01_diffuse 2048x2048"
+   ]
+  },
+  {
+   "name": "Moretti.stockings_fishnet_medium",
+   "textures": [
+    "stockings_fishnet_medium 1024x1024"
+   ]
+  },
+  {
+   "name": "Moretti.teeth_base",
+   "textures": [
+    "teeth 2048x2048"
+   ]
+  },
+  {
+   "name": "Moretti.tongue01",
+   "textures": [
+    "tongue01_diffuse 1024x1024"
+   ]
+  }
+ ],
+ "icosphere_info": [
+  {
+   "name": "Icosphere",
+   "parent": null,
+   "hide_render_in_file": false,
+   "dims": [
+    1.9021157026290894,
+    1.9999998807907104,
+    2.0
+   ]
+  }
+ ],
+ "total_tris": 176070,
+ "bbox_min": [
+  -0.2935656011104584,
+  -0.6606662273406982,
+  -0.007445774041116238
+ ],
+ "bbox_max": [
+  0.192953422665596,
+  0.1835852414369583,
+  1.6089304685592651
+ ],
+ "height_m": 1.6163762426003814,
+ "posed_height_idle": 1.6167507003992796
+}
