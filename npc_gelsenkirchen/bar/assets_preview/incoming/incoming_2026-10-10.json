@@ -10,7 +10,7 @@
       "textures": "2048 px (normal 2048, 38 МБ PNG)",
       "skeleton": "нет (статичная сетка в A-позе)",
       "fits": "Валентина/Фарах — нужна подгонка по телу (shrinkwrap + перенос весов); размер под фигуру ~1,7 м",
-      "license": "не указана — уточнить",
+      "license": "CC0 (подтвердил автор 10.10; сохранить ссылку на страницу загрузки)",
       "preview": "futuristic_top.png",
       "pc_path": "C:\\Users\\FAMILY\\Downloads\\futuristic-apocalypse-female-top.zip"
     },
@@ -23,7 +23,7 @@
       "textures": "4096 px",
       "skeleton": "нет (LOD02, A-поза)",
       "fits": "нужна подгонка по телу",
-      "license": "не указана — уточнить",
+      "license": "CC0 (подтвердил автор 10.10; сохранить ссылку на страницу загрузки)",
       "preview": "streetwear_sweatshirt.png",
       "pc_path": "C:\\Users\\FAMILY\\Downloads\\streetwear-sweatshirt.zip"
     },
@@ -36,7 +36,7 @@
       "textures": "diffuse 22 МБ / normal 16 МБ PNG (UDIM 1001)",
       "skeleton": "нет",
       "fits": "нужна подгонка по телу; рост ~1,7 м (платье 0,81 м, подол на 0,75 м)",
-      "license": "не указана — уточнить",
+      "license": "CC0 (подтвердил автор 10.10; сохранить ссылку на страницу загрузки)",
       "preview": "dress_elegant.png",
       "pc_path": "C:\\Users\\FAMILY\\Downloads\\dressElegant.zip"
     },
@@ -49,7 +49,7 @@
       "textures": "не найдены",
       "skeleton": "нет",
       "fits": "для игры слишком тяжёлая — нужна ретопология до ~10–20 тыс. треугольников и запекание карт",
-      "license": "не указана — уточнить",
+      "license": "CC0 (подтвердил автор 10.10; сохранить ссылку на страницу загрузки)",
       "preview": "shorts_scan.png",
       "pc_path": "C:\\Users\\FAMILY\\Downloads\\short.fbx"
     },
@@ -62,7 +62,7 @@
       "textures": "кожа и жилет 2048 px, волосы 1024 px",
       "skeleton": "Character Creator CC_Base, 101 кость (как у Фарах; не Mixamo — нужен ретаргет или переименование костей), мимика — shape keys",
       "fits": "жилет и бельё сидят на теле CC — подходят к Фарах без подгонки; к Валентине (MakeHuman) — подгонка",
-      "license": "не указана — уточнить",
+      "license": "CC0 (подтвердил автор 10.10; сохранить ссылку на страницу загрузки)",
       "preview": "joy_portrait.png, joy_waistcoat.png, joy_underwear_bottoms.png (полный рост не публикуется: модель без одежды)",
       "pc_path": "C:\\Users\\FAMILY\\Downloads\\joy.blend"
     }
